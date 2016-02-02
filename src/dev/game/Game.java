@@ -1,14 +1,25 @@
 package dev.game;
 
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+
 import dev.frames.MainFrame;
+import dev.states.GameState;
+import dev.states.State;
+import dev.states.StateControl;
+import dev.util.fpsControl.FpsControl;
 
 public class Game implements Runnable{
 
 	private MainFrame mainFrame;
+	private GameState gameState;
 
 	private Thread gameThread;
 
 	private boolean gameLoop;
+
+	private Graphics g;
+	private BufferStrategy bs;
 
 	public Game(){
 		gameLoop = false;
@@ -17,6 +28,8 @@ public class Game implements Runnable{
 	private void init(){
 		mainFrame = new MainFrame();
 
+		gameState = new GameState();
+		StateControl.setState(gameState);
 	}
 
 	public void start() {
@@ -31,9 +44,16 @@ public class Game implements Runnable{
 	public void run() {
 		init();
 
+
 		while(gameLoop){
-			draw();
-			update();
+			FpsControl.loopStart();
+
+			if(FpsControl.isUpdateTime()){
+				draw();
+				update();
+			}
+
+			FpsControl.loopEnd();
 		}
 
 		end();
@@ -41,17 +61,37 @@ public class Game implements Runnable{
 	}
 
 	private void update() {
-		// TODO Auto-generated method stub
+		if(StateControl.getState() != null){
+			StateControl.getState().update();
+		}
 
 	}
 
 	private void draw() {
-		// TODO Auto-generated method stub
+		bs = mainFrame.getCanvas().getBufferStrategy();
+		if(bs == null){
+			mainFrame.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		g = bs.getDrawGraphics();
+
+		//clear
+		g.clearRect(0, 0, MainFrame.MAIN_FRAME_DIMENSION.width, MainFrame.MAIN_FRAME_DIMENSION.height);
+
+		//draw
+		if(StateControl.getState() != null){
+			StateControl.getState().Draw(g);
+		}
+
+		//end drawing
+		bs.show();
+		g.dispose();
 
 	}
 
 	public void end(){
 		if(!gameLoop) return ;
+
 		gameLoop = false;
 
 		try {
