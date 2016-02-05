@@ -10,6 +10,7 @@ public class FpsControl {
 	private static long lastTime = System.nanoTime();
 	private static long timer = 0;
 	private static int ticks = 0;
+
 	private static ArrayList<IFpsInformer> fpsInformerList = new ArrayList<IFpsInformer>();
 
 	public static void loopStart(){

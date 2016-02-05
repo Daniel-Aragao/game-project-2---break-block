@@ -49,8 +49,8 @@ public class Game implements Runnable{
 			FpsControl.loopStart();
 
 			if(FpsControl.isUpdateTime()){
-				draw();
 				update();
+				draw();
 			}
 
 			FpsControl.loopEnd();
