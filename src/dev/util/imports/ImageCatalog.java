@@ -4,7 +4,15 @@ public enum ImageCatalog {
 	bloco_1(0),
 	bloco_2(1),
 	bloco_3(2),
-	bola_1(3);
+	bloco_4(3),
+	bloco_5(4),
+	bloco_6(5),
+	bloco_7(6),
+	bloco_8(7),
+	bloco_9(8),
+	bloco_10(9),
+	bola_1(10),
+	background_1(11);
 
 	private final int valor;
 

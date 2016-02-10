@@ -3,17 +3,27 @@ package dev.worlds;
 import java.awt.Graphics;
 
 import dev.entitys.blocos.Bloco;
+import dev.frames.MainFrame;
 
 public class Mapa {
+	public static final int MAPA_WIDTH = MainFrame.MAIN_FRAME_DIMENSION.width / Celula.CELULA_WIDTH,
+							MAPA_HEIGHT = MainFrame.MAIN_FRAME_DIMENSION.height / Celula.CELULA_HEIGHT;
+
 	private Celula[][] celulas;
 
 	private int width, height;
 
+
+
 	public Mapa(int width, int height){
-		this.width = width;
-		this.height = height;
+		this.width = MAPA_WIDTH;
+		this.height = MAPA_HEIGHT;
 
 		celulas = new Celula[height][width];
+	}
+
+	public Celula getCelula(int i, int j){
+		return celulas[i][j];
 	}
 
 	public void setMaping(int[][] maping) {
@@ -22,18 +32,13 @@ public class Mapa {
 				celulas[i][j] = new Celula(i, j);
 
 				int valor = maping[i][j];
-				switch(valor){
-					case -2:
-						break;
-					case -1:
-						break;
-					case 0:
-						break;
-					case 1:
-					case 2:
-					case 3:
-						Bloco bloco = new Bloco(j*Bloco.BLOCO_WIDTH, i*Bloco.BLOCO_HEIGHT, valor);
-						celulas[i][j].addElement(bloco);
+				if (valor > 0){
+					Bloco bloco = new Bloco(j*Bloco.BLOCO_WIDTH, i*Bloco.BLOCO_HEIGHT, valor);
+					celulas[i][j].addElement(bloco);
+				}else if( valor == -2){
+
+				}else if( valor == -1){
+
 				}
 			}
 		}

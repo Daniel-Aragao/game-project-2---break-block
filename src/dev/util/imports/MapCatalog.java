@@ -2,7 +2,8 @@ package dev.util.imports;
 
 public enum MapCatalog {
 
-	primeiro(0);
+	primeiro(0),
+	segundo(1);
 
 
 	private final int valor;
