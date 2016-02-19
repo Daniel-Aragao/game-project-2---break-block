@@ -28,13 +28,14 @@ public class MainFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
-		frame.setFocusable(false);
+		frame.setFocusable(true);
 		frame.setVisible(true);
 
 		canvas = new Canvas();
 		canvas.setPreferredSize(dimension);
 		canvas.setMaximumSize(dimension);
 		canvas.setMinimumSize(dimension);
+		canvas.setFocusable(false);
 
 		frame.add(canvas);
 		frame.pack();

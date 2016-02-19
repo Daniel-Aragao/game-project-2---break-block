@@ -1,6 +1,7 @@
 package dev.entitys;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 
 public abstract class Entity {
@@ -16,7 +17,7 @@ public abstract class Entity {
 		this.width = width;
 		this.height = height;
 
-		bounds = new Rectangle(0, 0, width, height);
+		bounds = new Rectangle((int)x,(int) y, width, height);
 	}
 
 	public abstract void draw(Graphics g);
@@ -56,10 +57,19 @@ public abstract class Entity {
 	}
 
 	public Rectangle getBounds() {
+		bounds.x = (int)this.x;
+		bounds.y = (int)this.y;
 		return bounds;
 	}
 
 	public void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
+	}
+
+	public boolean contains(Point a){
+		return getBounds().contains(a);
+	}
+	public boolean contains(int x, int y){
+		return getBounds().contains(x, y);
 	}
 }

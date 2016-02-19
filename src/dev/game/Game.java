@@ -4,15 +4,19 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import dev.frames.MainFrame;
+import dev.inputs.Keyboard;
+import dev.needs.GameStateNeeds;
 import dev.states.GameState;
-import dev.states.State;
 import dev.states.StateControl;
 import dev.util.fpsControl.FpsControl;
+import dev.util.fpsControl.IFpsInformer;
 
 public class Game implements Runnable{
 
 	private MainFrame mainFrame;
+
 	private GameState gameState;
+	private GameStateNeeds gameStateNeeds;
 
 	private Thread gameThread;
 
@@ -20,6 +24,7 @@ public class Game implements Runnable{
 
 	private Graphics g;
 	private BufferStrategy bs;
+	private Keyboard keyboard;
 
 	public Game(){
 		gameLoop = false;
@@ -27,8 +32,13 @@ public class Game implements Runnable{
 
 	private void init(){
 		mainFrame = new MainFrame();
+		keyboard = new Keyboard();
 
-		gameState = new GameState();
+		mainFrame.getFrame().addKeyListener(keyboard);
+
+		gameStateNeeds = new GameStateNeeds(keyboard);
+
+		gameState = new GameState(this.gameStateNeeds);
 		StateControl.setState(gameState);
 	}
 
@@ -43,7 +53,14 @@ public class Game implements Runnable{
 	@Override
 	public void run() {
 		init();
+		FpsControl.addIFpsInformer(new IFpsInformer() {
 
+			@Override
+			public void FpsExibition(int frames) {
+				System.out.println("FPS: "+frames);
+
+			}
+		});
 
 		while(gameLoop){
 			FpsControl.loopStart();
@@ -61,6 +78,8 @@ public class Game implements Runnable{
 	}
 
 	private void update() {
+		keyboard.update();
+
 		if(StateControl.getState() != null){
 			StateControl.getState().update();
 		}
