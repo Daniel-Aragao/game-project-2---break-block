@@ -12,6 +12,7 @@ import dev.entitys.creatures.Bola;
 import dev.entitys.creatures.Player;
 import dev.frames.MainFrame;
 import dev.listeners.IBlocoHittedListener;
+import dev.needs.CreatureNeeds;
 import dev.needs.MapNeeds;
 import dev.needs.PlayerNeeds;
 
@@ -23,6 +24,7 @@ public class Mapa {
 			MAPA_HEIGHT = MainFrame.MAIN_FRAME_DIMENSION.height / CELULA_HEIGHT;
 
 	private ArrayList<Entity> elementos;
+	private ArrayList<Entity> elementosRemovidos;
 
 	private int width, height;
 
@@ -69,7 +71,7 @@ public class Mapa {
 				} else if (valor == -2) {
 					if (player == null) {
 						PlayerNeeds playerNeeds =  new PlayerNeeds(needs.getKeyboard(),j * Bloco.BLOCO_WIDTH, i * Bloco.BLOCO_HEIGHT,
-								Player.PLAYER_DEFAULT_WIDTH, Player.PLAYER_DEFAULT_HEIGHT);
+								Player.PLAYER_DEFAULT_WIDTH, Player.PLAYER_DEFAULT_HEIGHT, this.elementos);
 						this.player = new Player(playerNeeds);
 
 						elementos.add(player);
@@ -78,8 +80,9 @@ public class Mapa {
 
 				} else if (valor == -1) {
 					if (bola == null) {
-						this.bola = new Bola(j * Bloco.BLOCO_WIDTH, i * Bloco.BLOCO_HEIGHT, Bola.BOLA_DEFAULT_WIDTH,
-								Bola.BOLA_DEFAULT_HEIGHT);
+						CreatureNeeds cretureNeeds = new CreatureNeeds(j * Bloco.BLOCO_WIDTH, i * Bloco.BLOCO_HEIGHT, Bola.BOLA_DEFAULT_WIDTH,
+								Bola.BOLA_DEFAULT_HEIGHT, elementos);
+						this.bola = new Bola(cretureNeeds);
 						elementos.add(bola);
 					}
 

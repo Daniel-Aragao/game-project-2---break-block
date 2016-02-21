@@ -16,7 +16,7 @@ public class Player extends Creature{
 	private PlayerNeeds playerNeeds;
 
 	public Player(PlayerNeeds playerNeeds) {
-		super(playerNeeds.x, playerNeeds.y, playerNeeds.width, playerNeeds.height);
+		super(playerNeeds);
 		this.playerNeeds = playerNeeds;
 	}
 
@@ -57,6 +57,19 @@ public class Player extends Creature{
 		if(playerNeeds.keyboard.isRight()){
 			xMove = (int)this.xSpeed;
 		}
+	}
+
+	@Override
+	protected void moveBump(){
+		int proximoX = (int) ((x + width) + xMove);
+		if( colide(proximoX, (int)y)
+				|| colide(proximoX, (int)(y + height))){
+			xMove = -1;
+			System.out.println("colisão right");
+		}else if(xMove < 0){ 	// Down
+
+		}
+
 	}
 
 

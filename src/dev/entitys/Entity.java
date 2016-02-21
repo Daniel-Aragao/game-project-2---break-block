@@ -57,8 +57,7 @@ public abstract class Entity {
 	}
 
 	public Rectangle getBounds() {
-		bounds.x = (int)this.x;
-		bounds.y = (int)this.y;
+		bounds = new Rectangle((int)x,(int) y, width, height);
 		return bounds;
 	}
 

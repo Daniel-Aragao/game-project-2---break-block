@@ -1,25 +1,31 @@
 package dev.entitys.creatures;
 
+import java.util.ArrayList;
+
 import dev.entitys.Entity;
+import dev.needs.CreatureNeeds;
 
 public abstract class Creature extends Entity{
 
 	public static final int DEFAULT_HEALTH = 3;
 	public static final double  DEFAULT_X_SPEED = 6.0,
-							 	DEFAULT_Y_SPEED = -3.0;
+							 	DEFAULT_Y_SPEED = 3.0;
 	public static final int DEFAULT_CREATURE_WIDTH = 64,
 							DEFAULT_CREATURE_HEIGHT = 20;
 
 	protected int health;
 	protected double xSpeed, ySpeed;
 	protected double xMove, yMove;
+	protected ArrayList<Entity> elementos;
 
-	public Creature(double x, double y, int width, int height) {
-		super(x, y, width, height);
+	public Creature(CreatureNeeds creatureNeeds) {
+		super(creatureNeeds.x, creatureNeeds.y, creatureNeeds.width, creatureNeeds.height);
 		health = DEFAULT_HEALTH;
 
 		xSpeed = DEFAULT_X_SPEED;
 		ySpeed = DEFAULT_Y_SPEED;
+
+		this.elementos = creatureNeeds.elementos;
 
 		this.xMove = 0;
 		this.yMove = 0;
@@ -29,17 +35,28 @@ public abstract class Creature extends Entity{
 		this.yMove = 0;
 
 		getMovements();
-		MoveBump();
+		moveBump();// colisão
 
 		x += xMove;
 		y += yMove;
 
 	}
 
-	private void MoveBump() {
-		// TODO Auto-generated method stub
+	protected void moveBump() {
+
 
 	}
+
+	protected boolean colide(int x, int y){
+		for(Entity e : elementos){
+			 if(e.getBounds().contains(x,y)){
+				 return true;
+			 }
+		}
+
+		return false;
+	}
+
 	protected abstract void getMovements();
 
 
