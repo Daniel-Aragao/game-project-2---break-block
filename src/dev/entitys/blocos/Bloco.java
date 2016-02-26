@@ -28,13 +28,13 @@ public abstract class Bloco extends Entity{
 	@Override
 	public void draw(Graphics g) {
 
-		if(valor >= 1)
+		if(valor > 0)
 		g.drawImage(Assets.getImage(ImageCatalog.getItem(valor-1)), (int)x, (int)y, null);
 
 	}
 	@Override
 	public void update() {
-// quando hitar chamar o metodo bloco hitAction
+
 	}
 
 	public int getValor() {

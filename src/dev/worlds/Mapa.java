@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import dev.entitys.Entity;
+import dev.entitys.Wall.Wall;
 import dev.entitys.blocos.Bloco;
 import dev.entitys.blocos.BlocoMassive;
 import dev.entitys.blocos.BlocoWeak;
@@ -12,9 +13,11 @@ import dev.entitys.creatures.Bola;
 import dev.entitys.creatures.Player;
 import dev.frames.MainFrame;
 import dev.listeners.IBlocoHittedListener;
+import dev.listeners.IWallColisionEffects;
 import dev.needs.CreatureNeeds;
 import dev.needs.MapNeeds;
 import dev.needs.PlayerNeeds;
+import dev.util.GameOverTools;
 
 public class Mapa {
 	public static final int CELULA_WIDTH = 40,
@@ -34,6 +37,8 @@ public class Mapa {
 	private Bola bola;
 	MapNeeds needs;
 
+	private GameOverTools gameOverTools;
+
 	public Mapa(MapNeeds needs) {
 		this.needs = needs;
 		this.width = needs.getWidth();
@@ -42,10 +47,36 @@ public class Mapa {
 		blocosCounter = 0;
 
 		elementos = new ArrayList<Entity>();
+		elementosRemovidos = new ArrayList<Entity>();
 
 		setMaping(needs.getMaping());
+		setBounds();
 
+		gameOverTools = new GameOverTools();
+	}
 
+	private void setBounds() {
+		Wall northWall = new Wall(0, -20, MainFrame.MAIN_FRAME_DIMENSION.width, 20);
+		elementos.add(northWall);
+
+		Wall southWall = new Wall(0,
+				MainFrame.MAIN_FRAME_DIMENSION.height,
+				MainFrame.MAIN_FRAME_DIMENSION.width, 20);
+		elementos.add(southWall);
+		southWall.setSolid(false);
+
+		Wall southkillerWall = new Wall(0,
+				MainFrame.MAIN_FRAME_DIMENSION.height+CELULA_HEIGHT,
+				MainFrame.MAIN_FRAME_DIMENSION.width, 20);
+		southkillerWall.setWallColisionEffects(new WallColisionEffects());
+		elementos.add(southkillerWall);
+
+		Wall eastWall = new Wall(MainFrame.MAIN_FRAME_DIMENSION.width, 0, 20,
+				MainFrame.MAIN_FRAME_DIMENSION.height);
+		elementos.add(eastWall);
+
+		Wall westWall = new Wall(-20, 0, 20, MainFrame.MAIN_FRAME_DIMENSION.height);
+		elementos.add(westWall);
 	}
 
 	private void setMaping(int[][] maping) {
@@ -102,8 +133,14 @@ public class Mapa {
 	}
 
 	public void update() {
-		for (Entity e : this.elementos){
-			e.update();
+		if(!gameOverTools.isGameOver()){
+			for (Entity e : this.elementos){
+				e.update();
+			}
+			removalFromRemoveList();
+			if(blocosCounter <= 0){
+				System.out.println("Próxima fase");
+			}
 		}
 	}
 
@@ -111,16 +148,45 @@ public class Mapa {
 
 		@Override
 		public void hitAction(Bloco bloco) {
-//			bloco.setValor(bloco.getValor() - 1);
-//			if (bloco.getValor() <= 0) {
-//				blocosCounter--;
-//				for (int i = 0; i < celulas.length; i++) {
-//					for (int j = 0; j < celulas[0].length; j++) {
-//						celulas[i][j].removeElement(bloco);
-//					}
-//				}
-//			}
+			bloco.setValor(bloco.getValor() - 1);
+			if (bloco.getValor() <= 0) {
+				blocosCounter--;
+				removeEntity(bloco);
+			}
 		}
 
 	}
+
+	public void removeEntity(Entity entity){
+		if(this.elementos.contains(entity)){
+			this.elementosRemovidos.add(entity);
+		}
+	}
+	private void removalFromRemoveList(){
+		for(Entity e : this.elementosRemovidos){
+			elementos.remove(e);
+		}
+	}
+	public void addElement(Entity entity){
+		throw new RuntimeException("Não implementado");
+	}
+
+	class WallColisionEffects implements IWallColisionEffects {
+
+
+
+		@Override
+		public void ballColision(Bola bola) {
+			removeEntity(bola);
+			player.setLifes(player.getLifes());
+			System.out.println("bola colided");
+			if(player.getLifes() < 0){
+				System.out.println("Game Over");
+				gameOverTools.setGameOver(true);
+			}
+
+		}
+
+	}
+
 }

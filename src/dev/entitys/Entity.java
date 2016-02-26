@@ -10,6 +10,7 @@ public abstract class Entity {
 	protected double y;
 	protected int width, height;
 	protected Rectangle bounds;
+	protected boolean solid;
 
 	public Entity(double x, double y, int width, int height){
 		this.x = x;
@@ -18,11 +19,15 @@ public abstract class Entity {
 		this.height = height;
 
 		bounds = new Rectangle((int)x,(int) y, width, height);
+
+		this.solid = true;
 	}
 
 	public abstract void draw(Graphics g);
 
 	public abstract void update();
+
+	public abstract void colided(Entity sponsor);
 
 	public double getX() {
 		return x;
@@ -70,5 +75,13 @@ public abstract class Entity {
 	}
 	public boolean contains(int x, int y){
 		return getBounds().contains(x, y);
+	}
+
+	public boolean isSolid() {
+		return solid;
+	}
+
+	public void setSolid(boolean solid) {
+		this.solid = solid;
 	}
 }

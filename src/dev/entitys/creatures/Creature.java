@@ -43,19 +43,53 @@ public abstract class Creature extends Entity{
 	}
 
 	protected void moveBump() {
+		if(xMove > 0){ 			// Right
+			int proximoX = (int) ((x + width) + xMove);
+			if( colide(proximoX, (int)y,this)
+					|| colide(proximoX, (int)(y + height),this)){
+				bumpRight();
+			}
 
+
+		}else if(xMove < 0){ 	// Left
+			int proximoX =  (int)(x + xMove);
+			if(colide(proximoX,(int)y,this)
+					|| colide(proximoX,(int)(y+height),this)){
+				bumpLeft();
+			}
+
+		}
+		if(yMove < 0){			// Up
+			int proximoY = (int) ((y) + yMove);
+			if(colide((int)x, proximoY,this)
+					||colide((int)(x+width), proximoY,this)){
+				bumpUp();
+			}
+
+		}else if( yMove > 0){	// Down
+			int proximoY = (int) ((y + height) + yMove);
+			if(colide((int)x, proximoY,this)
+					||colide((int)(x+width), proximoY,this)){
+				bumpDown();
+			}
+		}
 
 	}
 
-	protected boolean colide(int x, int y){
+	private boolean colide(int x, int y, Entity sponsor){
 		for(Entity e : elementos){
-			 if(e.getBounds().contains(x,y)){
+			 if(e.getBounds().contains(x,y) && e.isSolid()){
+				 e.colided(sponsor);
 				 return true;
 			 }
 		}
 
 		return false;
 	}
+	protected abstract void bumpRight();
+	protected abstract void bumpLeft();
+	protected abstract void bumpUp();
+	protected abstract void bumpDown();
 
 	protected abstract void getMovements();
 

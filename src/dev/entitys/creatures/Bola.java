@@ -27,46 +27,44 @@ public class Bola extends Creature{
 		Move();
 	}
 
+
+
 	@Override
-	protected void moveBump(){
-		if(xMove > 0){ 			// Right
-			int proximoX = (int) ((x + width) + xMove);
-			if( colide(proximoX, (int)y)
-					|| colide(proximoX, (int)(y + height))){
-				xSpeed = - xSpeed;
-				xMove = 0;
-				System.out.println("colisão right");
-			}
-
-
-		}else if(xMove < 0){ 	// Left
-			int proximoX =  (int)((x) + xMove);
-
-		}
-		if(yMove < 0){			// Up
-			int proximoY = (int) ((y) + yMove);
-
-		}else if( yMove > 0){	// Down
-			int proximoY = (int) ((y + height) + yMove);
-
-		}
+	protected void bumpRight() {
+		xSpeed = - xSpeed;
+		xMove = 0;
 
 	}
 
-	protected boolean colide(int x, int y){
-		for(Entity e : elementos){
-			 if(e.getBounds().contains(x,y)){
-				 return true;
-			 }
-		}
+	@Override
+	protected void bumpLeft() {
+		xSpeed = - xSpeed;
+		xMove = 0;
 
-		return false;
+	}
+
+	@Override
+	protected void bumpUp() {
+		ySpeed = -ySpeed;
+		yMove=0;
+	}
+
+	@Override
+	protected void bumpDown() {
+		ySpeed = -ySpeed;
+		yMove=0;
 	}
 
 	@Override
 	protected void getMovements() {
 		xMove = xSpeed;
 		yMove = ySpeed;
+	}
+
+	@Override
+	public void colided(Entity sponsor) {
+		// TODO Auto-generated method stub
+
 	}
 
 

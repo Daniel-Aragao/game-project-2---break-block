@@ -2,6 +2,7 @@ package dev.entitys.creatures;
 
 import java.awt.Graphics;
 
+import dev.entitys.Entity;
 import dev.needs.PlayerNeeds;
 import dev.util.imports.Assets;
 import dev.util.imports.ImageCatalog;
@@ -59,23 +60,41 @@ public class Player extends Creature{
 		}
 	}
 
-	@Override
-	protected void moveBump(){
-		int proximoX = (int) ((x + width) + xMove);
-		if( colide(proximoX, (int)y)
-				|| colide(proximoX, (int)(y + height))){
-			xMove = -1;
-			System.out.println("colisão right");
-		}else if(xMove < 0){ 	// Down
 
-		}
+
+	@Override
+	protected void bumpRight() {
+		xMove = 0;
 
 	}
 
+	@Override
+	protected void bumpLeft() {
+		xMove=0;
+
+	}
+
+	@Override
+	protected void bumpUp() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void bumpDown() {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
 	protected void getMovements() {
 		getInput();
+	}
+
+	@Override
+	public void colided(Entity sponsor) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -57,7 +57,7 @@ public class Game implements Runnable{
 
 			@Override
 			public void FpsExibition(int frames) {
-				System.out.println("FPS: "+frames);
+				mainFrame.getFrame().setTitle(MainFrame.MAIN_FRAME_TITLE+" - FPS: "+frames);
 
 			}
 		});
