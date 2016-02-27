@@ -1,1 +1,2 @@
-vermelho -> laranja -> amarelo -> verde -> azul -> roxo -> preto
+vermelho -> laranja -> amarelo -> 
+verde -> azul -> roxo -> preto

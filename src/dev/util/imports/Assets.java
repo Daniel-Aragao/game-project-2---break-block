@@ -32,6 +32,8 @@ public class Assets {
 		paths.add("/imagens/bola_3.png");
 		paths.add("/imagens/background_1.jpg");
 		paths.add("/imagens/palheta_1.png");
+		paths.add("/imagens/coracao.png");
+		paths.add("/imagens/Game_Over.png");
 
 		for(String path : paths){
 			imagens.add(ImageLoader.loadImage(path));
@@ -108,6 +110,9 @@ public class Assets {
 			importMapas();
 		}
 		return mapas.get(catalog.getValor());
+	}
+	public static int getNMapas(){
+		return mapas.size();
 	}
 
 }

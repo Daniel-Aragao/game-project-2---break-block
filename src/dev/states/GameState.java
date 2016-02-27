@@ -1,8 +1,10 @@
 package dev.states;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 import dev.inputs.Keyboard;
+import dev.listeners.IKeyPressedListener;
 import dev.needs.GameStateNeeds;
 import dev.needs.MapNeeds;
 import dev.util.imports.Assets;
@@ -19,7 +21,18 @@ public class GameState extends State{
 
 	public GameState(GameStateNeeds gameStateNeeds){
 		this.keyboard = gameStateNeeds.getKeyboard();
+		keyboard.setKeyPressedListener(new IKeyPressedListener() {
 
+			@Override
+			public void keyPressed(KeyEvent keyEvent) {
+				if(KeyEvent.VK_P == keyEvent.getKeyCode()){
+					mapa.pause();
+				}else if(KeyEvent.VK_B == keyEvent.getKeyCode() || KeyEvent.VK_SPACE == keyEvent.getKeyCode()){
+					mapa.moveBall();
+				}
+
+			}
+		});
 		this.mapNeed = new MapNeeds(keyboard, Mapa.MAPA_WIDTH, Mapa.MAPA_HEIGHT, Assets.loadMap(MapCatalog.primeiro));
 
 		mapa = new Mapa(mapNeed);

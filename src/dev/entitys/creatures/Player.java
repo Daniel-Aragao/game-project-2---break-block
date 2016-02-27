@@ -3,28 +3,41 @@ package dev.entitys.creatures;
 import java.awt.Graphics;
 
 import dev.entitys.Entity;
+import dev.entitys.blocos.Bloco;
+import dev.frames.MainFrame;
 import dev.needs.PlayerNeeds;
 import dev.util.imports.Assets;
 import dev.util.imports.ImageCatalog;
+import dev.worlds.Mapa;
 
 public class Player extends Creature{
 	public static final int PLAYER_DEFAULT_WIDTH = 120,
 			PLAYER_DEFAULT_HEIGHT = 20;
+	public static final int CORACAO_WIDTH_HEIGHT = 14;
+	public static final int LIFES_X = MainFrame.MAIN_FRAME_DIMENSION.width - Bloco.BLOCO_WIDTH - CORACAO_WIDTH_HEIGHT-10;
 
 
 	private long scores;
-	private int lifes;
 	private PlayerNeeds playerNeeds;
+
+	private int lifes;
+
+
 
 	public Player(PlayerNeeds playerNeeds) {
 		super(playerNeeds);
 		this.playerNeeds = playerNeeds;
+		lifes = 3;
+		scores = 0;
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(Assets.getImage(ImageCatalog.palheta_1), (int)x, (int)y, null);
-
+		for(int i = 0; i < lifes; i++){
+			g.drawImage(Assets.getImage(ImageCatalog.coracao),
+					LIFES_X - i*CORACAO_WIDTH_HEIGHT, Mapa.HUD_Y - CORACAO_WIDTH_HEIGHT, null);
+		}
 	}
 
 	@Override
@@ -93,7 +106,7 @@ public class Player extends Creature{
 
 	@Override
 	public void colided(Entity sponsor) {
-		// TODO Auto-generated method stub
+		scores +=10;
 
 	}
 

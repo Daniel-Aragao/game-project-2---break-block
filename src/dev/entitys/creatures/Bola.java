@@ -10,11 +10,13 @@ import dev.util.imports.ImageCatalog;
 public class Bola extends Creature{
 	public static final int BOLA_DEFAULT_WIDTH = 20,
 			BOLA_DEFAULT_HEIGHT = 20;
+	private boolean moveable;
 
 	public Bola(CreatureNeeds creatureNeeds) {
 		super(creatureNeeds);
-//		xSpeed = -xSpeed;
+		xSpeed = -xSpeed;
 		ySpeed = -ySpeed;
+		moveable = false;
 	}
 
 	@Override
@@ -24,7 +26,10 @@ public class Bola extends Creature{
 
 	@Override
 	public void update() {
-		Move();
+		if(moveable){
+			Move();
+
+		}
 	}
 
 
@@ -65,6 +70,14 @@ public class Bola extends Creature{
 	public void colided(Entity sponsor) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public boolean isMoveable() {
+		return moveable;
+	}
+
+	public void setMoveable(boolean moveable) {
+		this.moveable = moveable;
 	}
 
 

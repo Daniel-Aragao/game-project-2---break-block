@@ -24,6 +24,7 @@ public class Keyboard implements KeyListener{
 	public void update(){
 		left = keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT];
 		right = keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT];
+
 	}
 
 
@@ -32,8 +33,10 @@ public class Keyboard implements KeyListener{
 		if(k.getKeyCode() >= keys.length) return;
 		keys[k.getKeyCode()] = true;
 
-//		if(keyPressedListener != null){
-//		}
+
+		if(keyPressedListener != null){
+			keyPressedListener.keyPressed(k);
+		}
 	}
 
 	@Override

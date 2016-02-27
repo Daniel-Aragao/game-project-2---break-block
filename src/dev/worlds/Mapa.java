@@ -18,6 +18,9 @@ import dev.needs.CreatureNeeds;
 import dev.needs.MapNeeds;
 import dev.needs.PlayerNeeds;
 import dev.util.GameOverTools;
+import dev.util.imports.Assets;
+import dev.util.imports.ImageCatalog;
+import dev.util.imports.MapCatalog;
 
 public class Mapa {
 	public static final int CELULA_WIDTH = 40,
@@ -25,17 +28,23 @@ public class Mapa {
 
 	public static final int MAPA_WIDTH = MainFrame.MAIN_FRAME_DIMENSION.width / CELULA_WIDTH,
 			MAPA_HEIGHT = MainFrame.MAIN_FRAME_DIMENSION.height / CELULA_HEIGHT;
+	public static final int HUD_Y = MainFrame.MAIN_FRAME_DIMENSION.height - Bloco.BLOCO_HEIGHT / 2 + 5;
 
 	private ArrayList<Entity> elementos;
 	private ArrayList<Entity> elementosRemovidos;
+	private ArrayList<Entity> elementosAdd;
 
 	private int width, height;
 
 	private int blocosCounter;
+	private int fase;
 
 	private Player player;
 	private Bola bola;
-	MapNeeds needs;
+	private MapNeeds needs;
+	private CreatureNeeds bolaNeeds;
+
+	private boolean pause;
 
 	private GameOverTools gameOverTools;
 
@@ -45,15 +54,19 @@ public class Mapa {
 		this.height = needs.getHeight();
 
 		blocosCounter = 0;
+		fase = 0;
+		pause = false;
 
 		elementos = new ArrayList<Entity>();
 		elementosRemovidos = new ArrayList<Entity>();
+		elementosAdd = new ArrayList<Entity>();
 
 		setMaping(needs.getMaping());
 		setBounds();
 
 		gameOverTools = new GameOverTools();
 	}
+
 
 	private void setBounds() {
 		Wall northWall = new Wall(0, -20, MainFrame.MAIN_FRAME_DIMENSION.width, 20);
@@ -111,10 +124,12 @@ public class Mapa {
 
 				} else if (valor == -1) {
 					if (bola == null) {
-						CreatureNeeds cretureNeeds = new CreatureNeeds(j * Bloco.BLOCO_WIDTH, i * Bloco.BLOCO_HEIGHT, Bola.BOLA_DEFAULT_WIDTH,
+						bolaNeeds = new CreatureNeeds(j * Bloco.BLOCO_WIDTH, i * Bloco.BLOCO_HEIGHT, Bola.BOLA_DEFAULT_WIDTH,
 								Bola.BOLA_DEFAULT_HEIGHT, elementos);
-						this.bola = new Bola(cretureNeeds);
+						this.bola = new Bola(bolaNeeds);
 						elementos.add(bola);
+					}else{
+						bola.setMoveable(false);
 					}
 
 				}
@@ -129,17 +144,42 @@ public class Mapa {
 
 		g.setColor(Color.black);
 		g.drawString("Blocos restantes: " + this.blocosCounter, 40,
-				MainFrame.MAIN_FRAME_DIMENSION.height - Bloco.BLOCO_HEIGHT / 2 + 5);
+				HUD_Y);
+
+
+		if(!gameOverTools.isGameOver()){
+			if(!pause){
+				removalFromRemoveList();
+				addElements();
+			}
+		}else{
+			g.drawImage(
+					Assets.getImage(ImageCatalog.game_over),
+					MainFrame.MAIN_FRAME_DIMENSION.width/2 - Assets.getImage(ImageCatalog.game_over).getWidth()/2,
+					MainFrame.MAIN_FRAME_DIMENSION.height/2 - Assets.getImage(ImageCatalog.game_over).getHeight()/2,
+					null
+					);
+		}
 	}
 
 	public void update() {
 		if(!gameOverTools.isGameOver()){
-			for (Entity e : this.elementos){
-				e.update();
-			}
-			removalFromRemoveList();
-			if(blocosCounter <= 0){
-				System.out.println("Próxima fase");
+			if(!pause){
+				for (Entity e : this.elementos){
+					e.update();
+				}
+				if(!bola.isMoveable()){
+					bola.setX(player.getX()+Bloco.BLOCO_WIDTH);
+					bola.setY(player.getY() - Bola.BOLA_DEFAULT_HEIGHT);
+				}
+				if(blocosCounter <= 0){
+					if(fase < Assets.getNMapas() -1){
+						setMaping(Assets.loadMap(MapCatalog.getItem(fase+1)));
+						fase++;
+					}else{
+						GameOver();
+					}
+				}
 			}
 		}
 	}
@@ -166,9 +206,18 @@ public class Mapa {
 		for(Entity e : this.elementosRemovidos){
 			elementos.remove(e);
 		}
+		elementosRemovidos = new ArrayList<Entity>();
 	}
-	public void addElement(Entity entity){
-		throw new RuntimeException("Não implementado");
+	public void addInElementList(Entity entity){
+		if(!elementos.contains(entity)){
+			elementosAdd.add(entity);
+		}
+	}
+	private void addElements(){
+		for(Entity e : elementosAdd){
+			elementos.add(e);
+		}
+		elementosAdd = new ArrayList<Entity>();
 	}
 
 	class WallColisionEffects implements IWallColisionEffects {
@@ -176,17 +225,46 @@ public class Mapa {
 
 
 		@Override
-		public void ballColision(Bola bola) {
-			removeEntity(bola);
-			player.setLifes(player.getLifes());
-			System.out.println("bola colided");
+		public void ballColision(Bola b) {
+			removeEntity(b);
+			player.setLifes(player.getLifes()-1);
+
 			if(player.getLifes() < 0){
 				System.out.println("Game Over");
-				gameOverTools.setGameOver(true);
+				GameOver();
+			}else{
+				bola = new Bola(bolaNeeds);
+				addInElementList(bola);
 			}
 
 		}
 
 	}
 
+	private void GameOver(){
+		gameOverTools.setGameOver(true);
+	}
+
+	public boolean isPause() {
+		return pause;
+	}
+
+
+	public void setPause(boolean pause) {
+		this.pause = pause;
+	}
+
+	public void pause(){
+		this.pause = !this.pause;
+	}
+
+
+	public void moveBall() {
+		if(bola != null){
+			if(!bola.isMoveable()){
+				bola.setMoveable(true);
+			}
+		}
+
+	}
 }

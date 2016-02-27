@@ -13,7 +13,9 @@ public enum ImageCatalog {
 	bloco_10(9),
 	bola_1(10),
 	background_1(11),
-	palheta_1(12);
+	palheta_1(12),
+	coracao(13),
+	game_over(14);
 
 	private final int valor;
 
