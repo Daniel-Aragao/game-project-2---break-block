@@ -15,9 +15,10 @@ public class Player extends Creature{
 			PLAYER_DEFAULT_HEIGHT = 20;
 	public static final int CORACAO_WIDTH_HEIGHT = 14;
 	public static final int LIFES_X = MainFrame.MAIN_FRAME_DIMENSION.width - Bloco.BLOCO_WIDTH - CORACAO_WIDTH_HEIGHT-10;
-
+	public static final int MAX_LIFES = 3;
 
 	private long scores;
+	private long lastScores;
 	private PlayerNeeds playerNeeds;
 
 	private int lifes;
@@ -27,8 +28,9 @@ public class Player extends Creature{
 	public Player(PlayerNeeds playerNeeds) {
 		super(playerNeeds);
 		this.playerNeeds = playerNeeds;
-		lifes = 3;
+		lifes = MAX_LIFES;
 		scores = 0;
+		xSpeed = xSpeed*2.3;
 	}
 
 	@Override
@@ -61,6 +63,9 @@ public class Player extends Creature{
 
 	public void setLifes(int lifes) {
 		this.lifes = lifes;
+		if(this.lifes > 3){
+			this.lifes = MAX_LIFES;
+		}
 	}
 
 	private void getInput() {
@@ -108,6 +113,14 @@ public class Player extends Creature{
 	public void colided(Entity sponsor) {
 		scores +=10;
 
+	}
+
+	public long getLastScores() {
+		return lastScores;
+	}
+
+	public void setLastScores(long lastScores) {
+		this.lastScores = lastScores;
 	}
 
 }

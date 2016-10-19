@@ -14,8 +14,8 @@ public class Bola extends Creature{
 
 	public Bola(CreatureNeeds creatureNeeds) {
 		super(creatureNeeds);
-		xSpeed = -xSpeed;
-		ySpeed = -ySpeed;
+		xSpeed = -xSpeed*2.545623;
+		ySpeed = -ySpeed*1.653245;
 		moveable = false;
 	}
 

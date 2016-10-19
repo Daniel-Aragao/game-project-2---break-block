@@ -8,7 +8,7 @@ import dev.needs.CreatureNeeds;
 public abstract class Creature extends Entity{
 
 	public static final int DEFAULT_HEALTH = 3;
-	public static final double  DEFAULT_X_SPEED = 6.0,
+	public static final double  DEFAULT_X_SPEED = 3.0,
 							 	DEFAULT_Y_SPEED = 3.0;
 	public static final int DEFAULT_CREATURE_WIDTH = 64,
 							DEFAULT_CREATURE_HEIGHT = 20;

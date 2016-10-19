@@ -7,6 +7,7 @@ import dev.frames.MainFrame;
 import dev.inputs.Keyboard;
 import dev.needs.GameStateNeeds;
 import dev.states.GameState;
+import dev.states.MenuState;
 import dev.states.StateControl;
 import dev.util.fpsControl.FpsControl;
 import dev.util.fpsControl.IFpsInformer;
@@ -17,6 +18,7 @@ public class Game implements Runnable{
 
 	private GameState gameState;
 	private GameStateNeeds gameStateNeeds;
+	private MenuState menuState;
 
 	private Thread gameThread;
 
@@ -39,6 +41,7 @@ public class Game implements Runnable{
 		gameStateNeeds = new GameStateNeeds(keyboard);
 
 		gameState = new GameState(this.gameStateNeeds);
+		menuState = new MenuState();
 		StateControl.setState(gameState);
 	}
 

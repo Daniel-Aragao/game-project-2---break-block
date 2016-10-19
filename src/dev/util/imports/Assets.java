@@ -52,6 +52,14 @@ public class Assets {
 
 		paths.add("./res/worlds/world_1");
 		paths.add("./res/worlds/world_2");
+		paths.add("./res/worlds/world_3");
+		paths.add("./res/worlds/world_4");
+//		paths.add("./res/worlds/world_5");
+//		paths.add("./res/worlds/world_6");
+//		paths.add("./res/worlds/world_7");
+//		paths.add("./res/worlds/world_8");
+//		paths.add("./res/worlds/world_9");
+//		paths.add("./res/worlds/world_10");
 
 		FileReader reader = null;
 		BufferedReader buffer = null;
