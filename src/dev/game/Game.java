@@ -5,9 +5,12 @@ import java.awt.image.BufferStrategy;
 
 import dev.frames.MainFrame;
 import dev.inputs.Keyboard;
+import dev.listeners.IStateListener;
 import dev.needs.GameStateNeeds;
+import dev.states.EStates;
 import dev.states.GameState;
 import dev.states.MenuState;
+import dev.states.State;
 import dev.states.StateControl;
 import dev.util.fpsControl.FpsControl;
 import dev.util.fpsControl.IFpsInformer;
@@ -38,10 +41,10 @@ public class Game implements Runnable{
 
 		mainFrame.getFrame().addKeyListener(keyboard);
 
-		gameStateNeeds = new GameStateNeeds(keyboard);
+		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener());
 
 		gameState = new GameState(this.gameStateNeeds);
-		menuState = new MenuState();
+		menuState = new MenuState(getStateListener());
 		StateControl.setState(gameState);
 	}
 
@@ -122,6 +125,17 @@ public class Game implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public IStateListener getStateListener(){
+		return new IStateListener() {
+			
+			@Override
+			public void StateChanged(EStates state) {
+				throw new RuntimeException("Não implementado");
+				
+			}
+		};
 	}
 
 

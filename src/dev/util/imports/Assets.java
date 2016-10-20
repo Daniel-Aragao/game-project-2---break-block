@@ -119,6 +119,14 @@ public class Assets {
 		}
 		return mapas.get(catalog.getValor());
 	}
+	public static int[][] loadMap(int fase) {
+		if(mapas == null){
+			importMapas();
+		}
+		return mapas.get(fase);
+	}
+	
+	
 	public static int getNMapas(){
 		return mapas.size();
 	}

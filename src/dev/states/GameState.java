@@ -20,6 +20,7 @@ public class GameState extends State{
 	private MapNeeds mapNeed;
 
 	public GameState(GameStateNeeds gameStateNeeds){
+		super(gameStateNeeds.getStateListener());
 		this.keyboard = gameStateNeeds.getKeyboard();
 		keyboard.setKeyPressedListener(new IKeyPressedListener() {
 
@@ -51,5 +52,12 @@ public class GameState extends State{
 		g.drawImage(Assets.getImage(ImageCatalog.background_1), 0, 0, null);
 		mapa.draw(g);
 
+	}
+
+
+	@Override
+	public void changeToState(EStates State) {
+		throw new RuntimeException("Não implementado");
+		
 	}
 }

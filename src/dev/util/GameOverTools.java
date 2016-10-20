@@ -4,10 +4,12 @@ public class GameOverTools {
 	private boolean gameOver;
 	private long gameOverTimer;
 	private long timeLimit;
+	private long lastTime;
 
 	public GameOverTools(){
 		setGameOver(false);
 		timeLimit = 5000;
+		gameOverTimer = 0;
 	}
 
 	public boolean isGameOver() {
@@ -33,5 +35,16 @@ public class GameOverTools {
 
 	public void setTimeLimit(long timeLimit) {
 		this.timeLimit = timeLimit;
+	}
+	
+	public boolean isFinished(){
+		if(gameOverTimer >= timeLimit){
+			return true;
+		}
+		if(lastTime != 0){
+			gameOverTimer += System.currentTimeMillis() - lastTime;			
+		}
+		lastTime = System.currentTimeMillis();
+		return false;
 	}
 }

@@ -78,8 +78,9 @@ public abstract class Creature extends Entity{
 
 	private boolean colide(int x, int y, Entity sponsor){
 		for(Entity e : elementos){
-			 if(e.getBounds().contains(x,y) && e.isSolid()){
+			 if(e.isSolid() && e.getBounds().contains(x,y)){
 				 e.colided(sponsor);
+				 sponsor.colided(e);
 				 return true;
 			 }
 		}

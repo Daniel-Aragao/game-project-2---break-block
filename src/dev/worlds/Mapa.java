@@ -17,10 +17,12 @@ import dev.listeners.IWallColisionEffects;
 import dev.needs.CreatureNeeds;
 import dev.needs.MapNeeds;
 import dev.needs.PlayerNeeds;
+import dev.states.EStates;
+import dev.states.MenuState;
+import dev.states.StateControl;
 import dev.util.GameOverTools;
 import dev.util.imports.Assets;
 import dev.util.imports.ImageCatalog;
-import dev.util.imports.MapCatalog;
 
 public class Mapa {
 	public static final int CELULA_WIDTH = 40, CELULA_HEIGHT = 20;
@@ -170,12 +172,17 @@ public class Mapa {
 					changeMap();
 				}
 			}
+		}else{
+			if(gameOverTools.isFinished()){
+				StateControl.getState().changeToState(EStates.Menu);
+			}
 		}
 	}
 
 	public void changeMap() {
 		if (fase < Assets.getNMapas() - 1) {
-			setMaping(Assets.loadMap(MapCatalog.getItem(fase + 1)));
+//			setMaping(Assets.loadMap(MapCatalog.getItem(fase + 1)));
+			setMaping(Assets.loadMap(fase + 1));
 			fase++;
 		} else {
 			GameOver();
@@ -271,7 +278,7 @@ public class Mapa {
 			player.setLifes(player.getLifes() - 1);
 
 			if (player.getLifes() < 0) {
-				System.out.println("Game Over");
+				//System.out.println("Game Over");
 				GameOver();
 			} else {
 				bola = new Bola(bolaNeeds);

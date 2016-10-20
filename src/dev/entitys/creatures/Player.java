@@ -111,7 +111,9 @@ public class Player extends Creature{
 
 	@Override
 	public void colided(Entity sponsor) {
-		scores +=10;
+		if(sponsor instanceof Bola){
+			scores +=10;			
+		}
 
 	}
 

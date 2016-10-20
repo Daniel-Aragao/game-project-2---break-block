@@ -14,8 +14,8 @@ public class Bola extends Creature{
 
 	public Bola(CreatureNeeds creatureNeeds) {
 		super(creatureNeeds);
-		xSpeed = -xSpeed*2.545623;
-		ySpeed = -ySpeed*1.653245;
+		xSpeed = -xSpeed*2.545623;//-xSpeed*1.5;//
+		ySpeed = -ySpeed*1.653245;//-ySpeed*1.3;//
 		moveable = false;
 	}
 
@@ -28,7 +28,6 @@ public class Bola extends Creature{
 	public void update() {
 		if(moveable){
 			Move();
-
 		}
 	}
 
@@ -68,7 +67,9 @@ public class Bola extends Creature{
 
 	@Override
 	public void colided(Entity sponsor) {
-		// TODO Auto-generated method stub
+		if(sponsor instanceof Player){
+			this.setxMove(this.getxMove() + ((Player) sponsor).getxMove());
+		}
 
 	}
 
