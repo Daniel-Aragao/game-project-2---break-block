@@ -1,5 +1,6 @@
 package dev.states;
 
+import java.awt.Container;
 import java.awt.Graphics;
 
 import dev.listeners.IStateListener;
@@ -7,7 +8,7 @@ import dev.listeners.IStateListener;
 public class PauseState extends State{
 
 	public PauseState(IStateListener StateListener) {
-		super(StateListener);
+		super(StateListener, EStates.Pause);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -27,6 +28,11 @@ public class PauseState extends State{
 	public void changeToState(EStates State) {
 		throw new RuntimeException("Não implementado");
 		
+	}
+
+	@Override
+	public Container getPanel() {
+		throw new RuntimeException("Não implementado");
 	}
 
 }

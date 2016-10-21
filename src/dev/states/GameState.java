@@ -1,5 +1,6 @@
 package dev.states;
 
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
@@ -20,7 +21,7 @@ public class GameState extends State{
 	private MapNeeds mapNeed;
 
 	public GameState(GameStateNeeds gameStateNeeds){
-		super(gameStateNeeds.getStateListener());
+		super(gameStateNeeds.getStateListener(), EStates.Game);
 		this.keyboard = gameStateNeeds.getKeyboard();
 		keyboard.setKeyPressedListener(new IKeyPressedListener() {
 
@@ -57,7 +58,14 @@ public class GameState extends State{
 
 	@Override
 	public void changeToState(EStates State) {
-		throw new RuntimeException("Não implementado");
+		// Salvar dados do usuário nesta etapa, ou na própria troca na controladora mais externa classe "Game"
+		this.StateListener.StateChanged(State);
 		
+	}
+
+
+	@Override
+	public Container getPanel() {
+		throw new RuntimeException("Não implementado");
 	}
 }

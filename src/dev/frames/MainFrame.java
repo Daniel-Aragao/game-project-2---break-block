@@ -1,9 +1,11 @@
 package dev.frames;
 
 import java.awt.Canvas;
+import java.awt.Container;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class MainFrame {
 	public static final String MAIN_FRAME_TITLE = "BreaK BlocK";
@@ -11,6 +13,7 @@ public class MainFrame {
 
 	private JFrame frame;
 	private Canvas canvas;
+	private JPanel panel;
 
 	private String title;
 	private Dimension dimension;
@@ -29,7 +32,7 @@ public class MainFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setFocusable(true);
-		frame.setVisible(true);
+//		frame.setVisible(true);
 
 		canvas = new Canvas();
 		canvas.setPreferredSize(dimension);
@@ -37,8 +40,8 @@ public class MainFrame {
 		canvas.setMinimumSize(dimension);
 		canvas.setFocusable(false);
 
-		frame.add(canvas);
-		frame.pack();
+//		frame.add(canvas);
+//		frame.pack();
 	}
 
 	public JFrame getFrame() {
@@ -47,6 +50,11 @@ public class MainFrame {
 
 	public Canvas getCanvas() {
 		return canvas;
+	}
+	
+	public void setContentPane(Container contentPane){
+		frame.setContentPane(contentPane);
+//		frame.add(contentPane);
 	}
 
 }

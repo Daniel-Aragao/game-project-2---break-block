@@ -10,7 +10,8 @@ public enum EStates {
 	CriacaoMapa(4),
 	Cadastro(5),
 	Login(6),
-	SelecaoFase(7);
+	SelecaoFase(7),
+	NovoJogo(8);
 
 	private final int valor;
 

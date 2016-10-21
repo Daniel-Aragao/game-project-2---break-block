@@ -1,15 +1,24 @@
 package dev.states;
 
+import java.awt.Container;
 import java.awt.Graphics;
 
 import dev.listeners.IStateListener;
 
 public abstract class State {
-	private IStateListener StateListener;
+	protected IStateListener StateListener;
+	protected EStates state;
 	
-	public State(IStateListener StateListener){
+	public State(IStateListener StateListener, EStates state){
 		this.StateListener = StateListener;
+		this.state = state;
 	}
+	
+	public EStates getState(){
+		return state;
+	}
+	
+	public abstract Container getPanel();
 	
 	public abstract void changeToState(EStates State);
 	

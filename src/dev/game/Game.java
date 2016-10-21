@@ -1,5 +1,6 @@
 package dev.game;
 
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
@@ -10,7 +11,6 @@ import dev.needs.GameStateNeeds;
 import dev.states.EStates;
 import dev.states.GameState;
 import dev.states.MenuState;
-import dev.states.State;
 import dev.states.StateControl;
 import dev.util.fpsControl.FpsControl;
 import dev.util.fpsControl.IFpsInformer;
@@ -22,6 +22,7 @@ public class Game implements Runnable{
 	private GameState gameState;
 	private GameStateNeeds gameStateNeeds;
 	private MenuState menuState;
+	private IStateListener stateListener;
 
 	private Thread gameThread;
 
@@ -43,9 +44,12 @@ public class Game implements Runnable{
 
 		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener());
 
-		gameState = new GameState(this.gameStateNeeds);
+//		gameState = new GameState(this.gameStateNeeds);
+//		StateControl.setState(gameState);
 		menuState = new MenuState(getStateListener());
-		StateControl.setState(gameState);
+		StateControl.setState(menuState);
+		getStateListener().SetContentPane(menuState.getPanel());
+		mainFrame.getFrame().setVisible(true);
 	}
 
 	public void start() {
@@ -69,14 +73,16 @@ public class Game implements Runnable{
 		});
 
 		while(gameLoop){
-			FpsControl.loopStart();
 
-			if(FpsControl.isUpdateTime()){
-				update();
-				draw();
+			if(StateControl.getState() != null && StateControl.getState().getState() == EStates.Game){
+				FpsControl.loopStart();
+				if(FpsControl.isUpdateTime()){
+					update();
+					draw();
+				}				
+				FpsControl.loopEnd();
 			}
 
-			FpsControl.loopEnd();
 		}
 
 		end();
@@ -126,16 +132,35 @@ public class Game implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
 	public IStateListener getStateListener(){
-		return new IStateListener() {
+		if (stateListener != null){
+			return stateListener;
+		}
+		stateListener = new IStateListener() {
 			
 			@Override
-			public void StateChanged(EStates state) {
-				throw new RuntimeException("Não implementado");
+			public void StateChanged(EStates newState) {				
+				EStates lastState = StateControl.getState().getState();
+				
+				switch(newState){
+					case Menu:
+						StateControl.setState(menuState);
+						break;
+					case NovoJogo:
+						StateControl.setState(new GameState(gameStateNeeds));
+						break;
+				}
+				
+				SetContentPane(StateControl.getState().getPanel());
+			}
+
+			@Override
+			public void SetContentPane(Container c) {
+				mainFrame.setContentPane(c);
 				
 			}
 		};
+		return stateListener;
 	}
 
 
