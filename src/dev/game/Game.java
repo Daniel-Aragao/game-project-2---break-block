@@ -10,6 +10,7 @@ import dev.listeners.IStateListener;
 import dev.needs.GameStateNeeds;
 import dev.states.EStates;
 import dev.states.GameState;
+import dev.states.LoginState;
 import dev.states.MenuState;
 import dev.states.StateControl;
 import dev.util.fpsControl.FpsControl;
@@ -22,6 +23,7 @@ public class Game implements Runnable{
 	private GameState gameState;
 	private GameStateNeeds gameStateNeeds;
 	private MenuState menuState;
+	private LoginState loginState;
 	private IStateListener stateListener;
 
 	private Thread gameThread;
@@ -46,9 +48,12 @@ public class Game implements Runnable{
 
 //		gameState = new GameState(this.gameStateNeeds);
 //		StateControl.setState(gameState);
-		menuState = new MenuState(getStateListener());
-		StateControl.setState(menuState);
-		getStateListener().SetContentPane(menuState.getPanel());
+		//menuState = new MenuState(getStateListener());
+		//StateControl.setState(menuState);
+		//getStateListener().SetContentPane(menuState.getPanel());
+		loginState = new LoginState(getStateListener());
+		StateControl.setState(loginState);
+		getStateListener().SetContentPane(loginState.getPanel());
 		mainFrame.getFrame().setVisible(true);
 	}
 
