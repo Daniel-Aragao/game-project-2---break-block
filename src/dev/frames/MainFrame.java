@@ -63,7 +63,7 @@ public class MainFrame {
 	}
 	
 	public void setContentPane(Container contentPane){
-		frame.removeAll();
+//		frame.removeAll();
 		frame.setContentPane(contentPane);
 //		frame.add(contentPane);
 	}

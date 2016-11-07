@@ -46,20 +46,15 @@ public class Game implements Runnable{
 		mainFrame.getFrame().addKeyListener(keyboard);
 
 		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener(), mainFrame.getCanvasPanel());
-
-//		gameState = new GameState(this.gameStateNeeds);
-//		StateControl.setState(gameState);
-<<<<<<< HEAD
+		
+		gameState = new GameState(this.gameStateNeeds);
 		menuState = new MenuState(getStateListener());
-		getStateListener().StateChanged(EStates.Menu);
-=======
-		//menuState = new MenuState(getStateListener());
-		//StateControl.setState(menuState);
-		//getStateListener().SetContentPane(menuState.getPanel());
 		loginState = new LoginState(getStateListener());
-		StateControl.setState(loginState);
-		getStateListener().SetContentPane(loginState.getPanel());
->>>>>>> f49ccd12018fa80d0b95b682d1b3a445123a38d8
+
+//		getStateListener().StateChanged(EStates.Menu);
+		getStateListener().StateChanged(EStates.Login);
+//		getStateListener().StateChanged(EStates.NovoJogo);
+
 		mainFrame.getFrame().setVisible(true);
 	}
 
@@ -160,6 +155,11 @@ public class Game implements Runnable{
 					case NovoJogo:
 						StateControl.setState(new GameState(gameStateNeeds));
 						break;
+					case Login:
+						StateControl.setState(loginState);
+						break;
+					default:
+						System.out.println(newState);
 				}
 				SetContentPane(StateControl.getState().getPanel());
 			}

@@ -6,34 +6,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dev.entitys.Usuario;
+import dev.entitys.Jogador;
 
-public class UsuarioRepository implements IRepository<Usuario> {
-
-	@Override
-	public Usuario buscar(String Id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+public class UsuarioRepository implements IRepository<Jogador> {
 
 	@Override
-	public Usuario buscar(int id) throws SQLException {
-
+	public Jogador buscar(String Id) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 
-		Usuario usuario = null;
+		Jogador usuario = null;
 
 		try {
 
 			con = Conexao.getConexao();
-			stmt = con.prepareStatement("SELECT * FROM usuarios WHERE id = ?");
-			stmt.setInt(1, id);
+			stmt = con.prepareStatement("SELECT * FROM jogador WHERE nome = '?'");
+			stmt.setString(1, Id);
 
 			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				usuario = new Usuario(rs.getInt("id"), rs.getString("usuario"), rs.getString("senha"));
+				usuario = new Jogador(rs.getString("nome"), rs.getString("senha"));
 			}
 
 		} catch (SQLException e) {
@@ -49,11 +42,16 @@ public class UsuarioRepository implements IRepository<Usuario> {
 			}
 		}
 
-		return usuario	;
+		return usuario;
 	}
 
 	@Override
-	public boolean adicionar(Usuario e) {
+	public Jogador buscar(int id) throws SQLException {
+		return null;
+	}
+
+	@Override
+	public boolean adicionar(Jogador e) {
 
 		Connection con = null;
 		PreparedStatement stmt = null;
@@ -61,7 +59,7 @@ public class UsuarioRepository implements IRepository<Usuario> {
 		try {
 			con = Conexao.getConexao();
 			stmt = con.prepareStatement(
-					"INSERT INTO usuarios (usuario, senha) values(?,?)");
+					"INSERT INTO jogador (nome, senha) values(?,?)");
 
 			stmt.setString(1, e.getUsuario());
 			stmt.setString(2, e.getSenha());
@@ -86,19 +84,19 @@ public class UsuarioRepository implements IRepository<Usuario> {
 	}
 
 	@Override
-	public void alterar(Usuario e) {
+	public void alterar(Jogador e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public ArrayList<Usuario> getList(String param) {
+	public ArrayList<Jogador> getList(String param) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<Usuario> getAll() {
+	public ArrayList<Jogador> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
