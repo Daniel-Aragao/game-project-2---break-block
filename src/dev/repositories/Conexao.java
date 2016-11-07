@@ -16,7 +16,7 @@ public class Conexao {
 	public static Connection getConexao() throws SQLException{
 		
 		return DriverManager.getConnection(
-				"jdbc:mysql://localhost:3307/breakingblock", 
+				"jdbc:mysql://localhost:3307/BreakingBlocks", 
 				"root", 
 				"123456");
 	}

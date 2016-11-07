@@ -20,7 +20,7 @@ public class UsuarioRepository implements IRepository<Jogador> {
 		try {
 
 			con = Conexao.getConexao();
-			stmt = con.prepareStatement("SELECT * FROM jogador WHERE nome = '?'");
+			stmt = con.prepareStatement("SELECT * FROM jogador WHERE nome = ?");
 			stmt.setString(1, Id);
 
 			ResultSet rs = stmt.executeQuery();
