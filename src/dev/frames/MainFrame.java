@@ -39,6 +39,12 @@ public class MainFrame {
 		canvas.setMaximumSize(dimension);
 		canvas.setMinimumSize(dimension);
 		canvas.setFocusable(false);
+		
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setPreferredSize(dimension);
+		panel.setFocusable(false);
+		panel.add(canvas,-1);
 
 //		frame.add(canvas);
 //		frame.pack();
@@ -52,7 +58,12 @@ public class MainFrame {
 		return canvas;
 	}
 	
+	public JPanel getCanvasPanel(){
+		return panel;
+	}
+	
 	public void setContentPane(Container contentPane){
+		frame.removeAll();
 		frame.setContentPane(contentPane);
 //		frame.add(contentPane);
 	}

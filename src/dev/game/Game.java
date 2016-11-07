@@ -11,6 +11,7 @@ import dev.needs.GameStateNeeds;
 import dev.states.EStates;
 import dev.states.GameState;
 import dev.states.MenuState;
+import dev.states.State;
 import dev.states.StateControl;
 import dev.util.fpsControl.FpsControl;
 import dev.util.fpsControl.IFpsInformer;
@@ -42,13 +43,12 @@ public class Game implements Runnable{
 
 		mainFrame.getFrame().addKeyListener(keyboard);
 
-		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener());
+		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener(), mainFrame.getCanvasPanel());
 
 //		gameState = new GameState(this.gameStateNeeds);
 //		StateControl.setState(gameState);
 		menuState = new MenuState(getStateListener());
-		StateControl.setState(menuState);
-		getStateListener().SetContentPane(menuState.getPanel());
+		getStateListener().StateChanged(EStates.Menu);
 		mainFrame.getFrame().setVisible(true);
 	}
 
@@ -121,7 +121,7 @@ public class Game implements Runnable{
 	}
 
 	public void end(){
-		if(!gameLoop) return ;
+		//if(gameLoop) return ;
 
 		gameLoop = false;
 
@@ -140,7 +140,7 @@ public class Game implements Runnable{
 			
 			@Override
 			public void StateChanged(EStates newState) {				
-				EStates lastState = StateControl.getState().getState();
+				State lastState = StateControl.getState();
 				
 				switch(newState){
 					case Menu:
@@ -150,7 +150,6 @@ public class Game implements Runnable{
 						StateControl.setState(new GameState(gameStateNeeds));
 						break;
 				}
-				
 				SetContentPane(StateControl.getState().getPanel());
 			}
 

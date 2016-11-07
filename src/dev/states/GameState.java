@@ -4,6 +4,8 @@ import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JPanel;
+
 import dev.inputs.Keyboard;
 import dev.listeners.IKeyPressedListener;
 import dev.needs.GameStateNeeds;
@@ -19,6 +21,7 @@ public class GameState extends State{
 	private Mapa mapa;
 	private Keyboard keyboard;
 	private MapNeeds mapNeed;
+	private JPanel canvasPanel;
 
 	public GameState(GameStateNeeds gameStateNeeds){
 		super(gameStateNeeds.getStateListener(), EStates.Game);
@@ -38,6 +41,7 @@ public class GameState extends State{
 		this.mapNeed = new MapNeeds(keyboard, Mapa.MAPA_WIDTH, Mapa.MAPA_HEIGHT, Assets.loadMap(MapCatalog.primeiro));
 
 		mapa = new Mapa(mapNeed);
+		this.canvasPanel = gameStateNeeds.getCanvasPanel();
 	}
 
 
@@ -66,6 +70,6 @@ public class GameState extends State{
 
 	@Override
 	public Container getPanel() {
-		throw new RuntimeException("Não implementado");
+		return canvasPanel;
 	}
 }

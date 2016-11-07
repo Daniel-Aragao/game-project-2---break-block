@@ -1,12 +1,14 @@
 package dev.states;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,7 +32,10 @@ public class MenuState extends State {
 		// painel.setPreferredSize(MainFrame.MAIN_FRAME_DIMENSION);
 
 		JPanel painelCenter = new JPanel();
-		painelCenter.setLayout(new FlowLayout(FlowLayout.LEFT));
+		
+		BoxLayout layoutCenter = new BoxLayout(painelCenter,BoxLayout.Y_AXIS);		
+		painelCenter.setLayout(layoutCenter);
+		
 		// painelCenter.setBackground(Color.BLACK);
 
 		JPanel painelSouth = new JPanel();
@@ -41,14 +46,22 @@ public class MenuState extends State {
 		ranking = new JButton("Ranking");
 		sair = new JButton("Sair");
 		criarFases = new JButton("Criar fases");
-
+		
+		jogar.setAlignmentX(Component.CENTER_ALIGNMENT);
+		continuar.setAlignmentX(Component.CENTER_ALIGNMENT);
+		ranking.setAlignmentX(Component.CENTER_ALIGNMENT);
+		sair.setAlignmentX(Component.CENTER_ALIGNMENT);
+		criarFases.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 		label = new JLabel("Break Block");
+		
+		label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		jogar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				throw new RuntimeException("Não implementado");
+				changeToState(EStates.NovoJogo);
 
 			}
 		});
@@ -72,8 +85,7 @@ public class MenuState extends State {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
-
+				System.exit(0);				
 			}
 		});
 		criarFases.addActionListener(new ActionListener() {
@@ -111,7 +123,8 @@ public class MenuState extends State {
 
 	@Override
 	public void changeToState(EStates State) {
-		throw new RuntimeException("Não implementado");
+		// mudar musica
+		StateListener.StateChanged(State);
 
 	}
 
