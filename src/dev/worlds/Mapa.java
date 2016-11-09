@@ -174,7 +174,7 @@ public class Mapa {
 			}
 		}else{
 			if(gameOverTools.isFinished()){
-				StateControl.getState().changeToState(EStates.Menu);
+				StateControl.getState().changeToState(EStates.FimJogo);
 			}
 		}
 	}
