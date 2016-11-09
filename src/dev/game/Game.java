@@ -13,6 +13,7 @@ import dev.states.EStates;
 import dev.states.GameState;
 import dev.states.LoginState;
 import dev.states.MenuState;
+import dev.states.RankingState;
 import dev.states.State;
 import dev.states.StateControl;
 import dev.util.fpsControl.FpsControl;
@@ -26,6 +27,8 @@ public class Game implements Runnable{
 	private GameStateNeeds gameStateNeeds;
 	private MenuState menuState;
 	private LoginState loginState;
+	private RankingState rankingState;
+	
 	private IStateListener stateListener;
 
 	private Thread gameThread;
@@ -53,11 +56,13 @@ public class Game implements Runnable{
 		gameState = new GameState(this.gameStateNeeds);
 		menuState = new MenuState(getStateListener());
 		loginState = new LoginState(getStateListener());
+		rankingState = new RankingState(getStateListener());
 
-		getStateListener().StateChanged(EStates.Menu);
+		//getStateListener().StateChanged(EStates.Menu);
 //		getStateListener().StateChanged(EStates.Login);
 //		getStateListener().StateChanged(EStates.NovoJogo);
-
+		getStateListener().StateChanged(EStates.Ranking);
+		
 		mainFrame.getFrame().setVisible(true);
 	}
 
@@ -163,6 +168,9 @@ public class Game implements Runnable{
 						break;
 					case Continue:
 						StateControl.setState(gameState);
+						break;
+					case Ranking:
+						StateControl.setState(rankingState);
 						break;
 					default:
 						System.out.println(newState);

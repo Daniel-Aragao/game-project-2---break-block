@@ -52,7 +52,6 @@ public class LoginState extends State {
 		registrar = new JButton("Registrar");
 		entrar = new JButton("Entrar");
 
-//		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 0;
 		// c.weightx = 0.2;
@@ -60,7 +59,6 @@ public class LoginState extends State {
 		c.ipady = 10;
 		panel.add(usuarioLabel, c);
 
-//		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 1;
 		c.weightx = 0.2;
@@ -68,7 +66,6 @@ public class LoginState extends State {
 		c.ipady = 5;
 		panel.add(usuario, c);
 
-//		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
 		c.weightx = 0.2;
@@ -76,7 +73,6 @@ public class LoginState extends State {
 		c.ipady = 10;
 		panel.add(senhaLabel, c);
 
-//		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 3;
 		c.weightx = 0.2;
@@ -84,22 +80,6 @@ public class LoginState extends State {
 		c.ipady = 5;
 		panel.add(senha, c);
 
-//		c.fill = GridBagConstraints.VERTICAL;
-//		c.gridx = 1;
-//		c.gridy = 4;
-//		c.weightx = 0.2;
-//		c.ipadx = 5;
-//		c.ipady = 5;
-//		panel.add(registrar, c);
-//
-//		c.fill = GridBagConstraints.VERTICAL;
-//		c.gridx = 1;
-//		c.gridy = 5;
-//		c.weightx = 0.2;
-//		c.ipadx = 5;
-//		c.ipady = 5;
-//		panel.add(entrar, c);
-		
 		southPanel.add(registrar);
 		southPanel.add(entrar);
 		
