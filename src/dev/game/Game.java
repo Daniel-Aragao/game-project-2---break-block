@@ -59,9 +59,9 @@ public class Game implements Runnable{
 		rankingState = new RankingState(getStateListener());
 
 		//getStateListener().StateChanged(EStates.Menu);
-//		getStateListener().StateChanged(EStates.Login);
+		getStateListener().StateChanged(EStates.Login);
 //		getStateListener().StateChanged(EStates.NovoJogo);
-		getStateListener().StateChanged(EStates.Ranking);
+		//getStateListener().StateChanged(EStates.Ranking);
 		
 		mainFrame.getFrame().setVisible(true);
 	}
