@@ -76,7 +76,7 @@ public class MenuState extends State {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				throw new RuntimeException("Não implementado");
+				changeToState(EStates.Continue);
 
 			}
 		});
@@ -99,7 +99,7 @@ public class MenuState extends State {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				throw new RuntimeException("Não implementado");
+				changeToState(EStates.CriacaoMapa);
 
 			}
 		});
