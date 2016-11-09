@@ -1,5 +1,6 @@
 package dev.game;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -45,15 +46,17 @@ public class Game implements Runnable{
 
 		mainFrame.getFrame().addKeyListener(keyboard);
 
-		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener(), mainFrame.getCanvasPanel());
+//		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener(), mainFrame.getCanvasPanel());
+		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener(), mainFrame.getCanvas());
+
 		
 		gameState = new GameState(this.gameStateNeeds);
 		menuState = new MenuState(getStateListener());
 		loginState = new LoginState(getStateListener());
 
 //		getStateListener().StateChanged(EStates.Menu);
-		getStateListener().StateChanged(EStates.Login);
-//		getStateListener().StateChanged(EStates.NovoJogo);
+//		getStateListener().StateChanged(EStates.Login);
+		getStateListener().StateChanged(EStates.NovoJogo);
 
 		mainFrame.getFrame().setVisible(true);
 	}
@@ -161,12 +164,16 @@ public class Game implements Runnable{
 					default:
 						System.out.println(newState);
 				}
-				SetContentPane(StateControl.getState().getPanel());
+				if (lastState == null){
+					SetContentPane(StateControl.getState().getPanel(), null);	
+				}else{
+					SetContentPane(StateControl.getState().getPanel(), lastState.getPanel());					
+				}
 			}
 
 			@Override
-			public void SetContentPane(Container c) {
-				mainFrame.setContentPane(c);
+			public void SetContentPane(Component c, Component b) {
+				mainFrame.setContentPane(c, b);
 				
 			}
 		};

@@ -1,6 +1,8 @@
 package dev.frames;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 
@@ -13,7 +15,7 @@ public class MainFrame {
 
 	private JFrame frame;
 	private Canvas canvas;
-	private JPanel panel;
+//	private JPanel panel;
 
 	private String title;
 	private Dimension dimension;
@@ -40,11 +42,11 @@ public class MainFrame {
 		canvas.setMinimumSize(dimension);
 		canvas.setFocusable(false);
 		
-		panel = new JPanel();
-		panel.setLayout(null);
-		panel.setPreferredSize(dimension);
-		panel.setFocusable(false);
-		panel.add(canvas,-1);
+//		panel = new JPanel();
+//		panel.setLayout(null);
+//		panel.setPreferredSize(dimension);
+//		panel.setFocusable(false);
+//		panel.add(canvas,-1);
 
 //		frame.add(canvas);
 //		frame.pack();
@@ -58,14 +60,18 @@ public class MainFrame {
 		return canvas;
 	}
 	
-	public JPanel getCanvasPanel(){
-		return panel;
-	}
+//	public JPanel getCanvasPanel(){
+//		return panel;
+//	}
 	
-	public void setContentPane(Container contentPane){
-//		frame.removeAll();
-		frame.setContentPane(contentPane);
-//		frame.add(contentPane);
+	public void setContentPane(Component contentPane, Component lastPanel){
+		if (lastPanel != null){
+			frame.remove(lastPanel);			
+		}
+		frame.add(contentPane);//, BorderLayout.CENTER);
+		frame.revalidate();
+		frame.repaint();
+		frame.pack();
 	}
 
 }

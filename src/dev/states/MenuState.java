@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import dev.frames.MainFrame;
 import dev.listeners.IStateListener;
 
 public class MenuState extends State {
@@ -28,8 +29,8 @@ public class MenuState extends State {
 		super(StateListener, EStates.Menu);
 		painel = new JPanel();
 		painel.setLayout(new BorderLayout());
-		// painel.setSize(MainFrame.MAIN_FRAME_DIMENSION);
-		// painel.setPreferredSize(MainFrame.MAIN_FRAME_DIMENSION);
+		painel.setSize(MainFrame.MAIN_FRAME_DIMENSION);
+		painel.setPreferredSize(MainFrame.MAIN_FRAME_DIMENSION);
 
 		JPanel painelCenter = new JPanel();
 		

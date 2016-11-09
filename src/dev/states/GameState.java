@@ -1,6 +1,7 @@
 package dev.states;
 
-import java.awt.Container;
+import java.awt.Canvas;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
@@ -22,6 +23,7 @@ public class GameState extends State{
 	private Keyboard keyboard;
 	private MapNeeds mapNeed;
 	private JPanel canvasPanel;
+	private Canvas canvas;
 
 	public GameState(GameStateNeeds gameStateNeeds){
 		super(gameStateNeeds.getStateListener(), EStates.Game);
@@ -41,7 +43,8 @@ public class GameState extends State{
 		this.mapNeed = new MapNeeds(keyboard, Mapa.MAPA_WIDTH, Mapa.MAPA_HEIGHT, Assets.loadMap(MapCatalog.primeiro));
 
 		mapa = new Mapa(mapNeed);
-		this.canvasPanel = gameStateNeeds.getCanvasPanel();
+		this.canvas = gameStateNeeds.getCanvas();
+//		this.canvasPanel = gameStateNeeds.getCanvasPanel();
 	}
 
 
@@ -69,7 +72,8 @@ public class GameState extends State{
 
 
 	@Override
-	public Container getPanel() {
-		return canvasPanel;
+	public Component getPanel() {
+//		return canvasPanel;
+		return canvas;
 	}
 }

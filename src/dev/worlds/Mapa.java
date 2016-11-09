@@ -28,7 +28,7 @@ public class Mapa {
 	public static final int CELULA_WIDTH = 40, CELULA_HEIGHT = 20;
 
 	public static final int MAPA_WIDTH = MainFrame.MAIN_FRAME_DIMENSION.width / CELULA_WIDTH,
-			MAPA_HEIGHT = MainFrame.MAIN_FRAME_DIMENSION.height / CELULA_HEIGHT;
+			MAPA_HEIGHT = /*30;*/MainFrame.MAIN_FRAME_DIMENSION.height / CELULA_HEIGHT;
 	public static final int HUD_Y = MainFrame.MAIN_FRAME_DIMENSION.height - Bloco.BLOCO_HEIGHT / 2 + 5;
 	public static final int HUD_INITIAL_X = 40;
 	public static final int SCORE_FOR_LIFE = 500;
