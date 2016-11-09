@@ -3,11 +3,14 @@ package dev.states;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -29,17 +32,20 @@ public class MenuState extends State {
 		super(StateListener, EStates.Menu);
 		painel = new JPanel();
 		painel.setLayout(new BorderLayout());
-		painel.setSize(MainFrame.MAIN_FRAME_DIMENSION);
-		painel.setPreferredSize(MainFrame.MAIN_FRAME_DIMENSION);
+//		painel.setSize(MainFrame.MAIN_FRAME_DIMENSION);
+//		painel.setPreferredSize(MainFrame.MAIN_FRAME_DIMENSION);
+		painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		JPanel painelCenter = new JPanel();
+		painelCenter.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
-		BoxLayout layoutCenter = new BoxLayout(painelCenter,BoxLayout.Y_AXIS);		
+		BoxLayout layoutCenter = new BoxLayout(painelCenter,BoxLayout.Y_AXIS);
 		painelCenter.setLayout(layoutCenter);
 		
 		// painelCenter.setBackground(Color.BLACK);
 
 		JPanel painelSouth = new JPanel();
+		painelSouth.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		painelSouth.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		jogar = new JButton("Jogar");
@@ -99,8 +105,11 @@ public class MenuState extends State {
 		});
 
 		painelCenter.add(label);
+		painelCenter.add(Box.createRigidArea(new Dimension(10, 10)));
 		painelCenter.add(continuar);
+		painelCenter.add(Box.createRigidArea(new Dimension(10, 10)));
 		painelCenter.add(jogar);
+		painelCenter.add(Box.createRigidArea(new Dimension(10, 10)));
 		painelCenter.add(ranking);
 
 		painelSouth.add(sair);
@@ -124,7 +133,7 @@ public class MenuState extends State {
 
 	@Override
 	public void changeToState(EStates State) {
-		// mudar musica
+		// salvar jogo
 		StateListener.StateChanged(State);
 
 	}

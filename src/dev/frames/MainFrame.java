@@ -1,13 +1,13 @@
 package dev.frames;
 
-import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+
+import dev.util.imports.Assets;
+import dev.util.imports.ImageCatalog;
 
 public class MainFrame {
 	public static final String MAIN_FRAME_TITLE = "BreaK BlocK";
@@ -34,6 +34,7 @@ public class MainFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setFocusable(true);
+		frame.setIconImage(Assets.getImage(ImageCatalog.icon));
 //		frame.setVisible(true);
 
 		canvas = new Canvas();
@@ -68,7 +69,7 @@ public class MainFrame {
 		if (lastPanel != null){
 			frame.remove(lastPanel);			
 		}
-		frame.add(contentPane);//, BorderLayout.CENTER);
+		frame.add(contentPane);
 		frame.revalidate();
 		frame.repaint();
 		frame.pack();

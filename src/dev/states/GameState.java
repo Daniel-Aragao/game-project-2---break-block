@@ -22,7 +22,6 @@ public class GameState extends State{
 	private Mapa mapa;
 	private Keyboard keyboard;
 	private MapNeeds mapNeed;
-	private JPanel canvasPanel;
 	private Canvas canvas;
 
 	public GameState(GameStateNeeds gameStateNeeds){
@@ -44,7 +43,6 @@ public class GameState extends State{
 
 		mapa = new Mapa(mapNeed);
 		this.canvas = gameStateNeeds.getCanvas();
-//		this.canvasPanel = gameStateNeeds.getCanvasPanel();
 	}
 
 

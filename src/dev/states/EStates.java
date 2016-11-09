@@ -11,7 +11,8 @@ public enum EStates {
 	Cadastro(5),
 	Login(6),
 	SelecaoFase(7),
-	NovoJogo(8);
+	NovoJogo(8),
+	Continue(9);
 
 	private final int valor;
 

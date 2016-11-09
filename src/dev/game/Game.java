@@ -54,9 +54,9 @@ public class Game implements Runnable{
 		menuState = new MenuState(getStateListener());
 		loginState = new LoginState(getStateListener());
 
-//		getStateListener().StateChanged(EStates.Menu);
+		getStateListener().StateChanged(EStates.Menu);
 //		getStateListener().StateChanged(EStates.Login);
-		getStateListener().StateChanged(EStates.NovoJogo);
+//		getStateListener().StateChanged(EStates.NovoJogo);
 
 		mainFrame.getFrame().setVisible(true);
 	}
@@ -83,14 +83,14 @@ public class Game implements Runnable{
 
 		while(gameLoop){
 
+			FpsControl.loopStart();
 			if(StateControl.getState() != null && StateControl.getState().getState() == EStates.Game){
-				FpsControl.loopStart();
 				if(FpsControl.isUpdateTime()){
 					update();
 					draw();
 				}				
-				FpsControl.loopEnd();
 			}
+			FpsControl.loopEnd();
 
 		}
 
@@ -160,6 +160,9 @@ public class Game implements Runnable{
 						break;
 					case Login:
 						StateControl.setState(loginState);
+						break;
+					case Continue:
+						StateControl.setState(gameState);
 						break;
 					default:
 						System.out.println(newState);

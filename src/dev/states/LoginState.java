@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,6 +39,7 @@ public class LoginState extends State {
 
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
+		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		JPanel southPanel = new JPanel();
 		southPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -48,7 +50,7 @@ public class LoginState extends State {
 		senhaLabel = new JLabel("Senha");
 		senha = new JPasswordField(16);
 		registrar = new JButton("Registrar");
-		entrar = new JButton("entrar");
+		entrar = new JButton("Entrar");
 
 //		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
@@ -181,7 +183,7 @@ public class LoginState extends State {
 
 	@Override
 	public void changeToState(EStates State) {
-		System.out.println("mudando o state para menu");
+		this.StateListener.StateChanged(State);
 
 	}
 

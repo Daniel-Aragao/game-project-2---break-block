@@ -15,7 +15,9 @@ public enum ImageCatalog {
 	background_1(11),
 	palheta_1(12),
 	coracao(13),
-	game_over(14);
+	game_over(14),
+	icon(15),
+	menu_background(16);
 
 	private final int valor;
 

@@ -34,6 +34,8 @@ public class Assets {
 		paths.add("/imagens/palheta_1.png");
 		paths.add("/imagens/coracao.png");
 		paths.add("/imagens/Game_Over.png");
+		paths.add("/imagens/icon.png");
+//		paths.add("/imagens/menubackground.png");
 
 		for(String path : paths){
 			imagens.add(ImageLoader.loadImage(path));
@@ -49,11 +51,12 @@ public class Assets {
 		mapas = new ArrayList<int[][]>();
 
 		ArrayList<String> paths = new ArrayList<String>();
-
+		
+		paths.add("./res/worlds/world_0");
 		paths.add("./res/worlds/world_1");
 		paths.add("./res/worlds/world_2");
-		paths.add("./res/worlds/world_3");
 		paths.add("./res/worlds/world_4");
+		paths.add("./res/worlds/world_3");
 //		paths.add("./res/worlds/world_5");
 //		paths.add("./res/worlds/world_6");
 //		paths.add("./res/worlds/world_7");
