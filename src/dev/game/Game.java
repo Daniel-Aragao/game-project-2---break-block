@@ -1,7 +1,6 @@
 package dev.game;
 
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
@@ -9,6 +8,7 @@ import dev.frames.MainFrame;
 import dev.inputs.Keyboard;
 import dev.listeners.IStateListener;
 import dev.needs.GameStateNeeds;
+import dev.states.CriarMapaState;
 import dev.states.EStates;
 import dev.states.GameState;
 import dev.states.LoginState;
@@ -19,7 +19,7 @@ import dev.states.StateControl;
 import dev.util.fpsControl.FpsControl;
 import dev.util.fpsControl.IFpsInformer;
 
-public class Game implements Runnable{
+public class Game implements Runnable {
 
 	private MainFrame mainFrame;
 
@@ -28,7 +28,8 @@ public class Game implements Runnable{
 	private MenuState menuState;
 	private LoginState loginState;
 	private RankingState rankingState;
-	
+	private CriarMapaState criarMapaState;
+
 	private IStateListener stateListener;
 
 	private Thread gameThread;
@@ -39,35 +40,38 @@ public class Game implements Runnable{
 	private BufferStrategy bs;
 	private Keyboard keyboard;
 
-	public Game(){
+	public Game() {
 		gameLoop = false;
 	}
 
-	private void init(){
+	private void init() {
 		mainFrame = new MainFrame();
 		keyboard = new Keyboard();
 
 		mainFrame.getFrame().addKeyListener(keyboard);
 
-//		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener(), mainFrame.getCanvasPanel());
+		// gameStateNeeds = new GameStateNeeds(keyboard, getStateListener(),
+		// mainFrame.getCanvasPanel());
 		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener(), mainFrame.getCanvas());
 
-		
 		gameState = new GameState(this.gameStateNeeds);
 		menuState = new MenuState(getStateListener());
 		loginState = new LoginState(getStateListener());
 		rankingState = new RankingState(getStateListener());
+		criarMapaState = new CriarMapaState(getStateListener());
 
-		//getStateListener().StateChanged(EStates.Menu);
-		getStateListener().StateChanged(EStates.Login);
-//		getStateListener().StateChanged(EStates.NovoJogo);
-		//getStateListener().StateChanged(EStates.Ranking);
-		
+		// getStateListener().StateChanged(EStates.Menu);
+//		getStateListener().StateChanged(EStates.Login);
+		// getStateListener().StateChanged(EStates.NovoJogo);
+		// getStateListener().StateChanged(EStates.Ranking);
+		getStateListener().StateChanged(EStates.CriacaoMapa);
+
 		mainFrame.getFrame().setVisible(true);
 	}
 
 	public void start() {
-		if(gameLoop) return;
+		if (gameLoop)
+			return;
 
 		gameLoop = true;
 		this.gameThread = new Thread(this, "Game Thread");
@@ -81,22 +85,21 @@ public class Game implements Runnable{
 
 			@Override
 			public void FpsExibition(int frames) {
-				mainFrame.getFrame().setTitle(MainFrame.MAIN_FRAME_TITLE+" - FPS: "+frames);
+				mainFrame.getFrame().setTitle(MainFrame.MAIN_FRAME_TITLE + " - FPS: " + frames);
 
 			}
 		});
 
-		while(gameLoop){
+		while (gameLoop) {
 
 			FpsControl.loopStart();
-			if(StateControl.getState() != null && StateControl.getState().getState() == EStates.Game){
-				if(FpsControl.isUpdateTime()){
-					update();
+			if (FpsControl.isUpdateTime()) {
+				update();
+				if (StateControl.getState() != null && StateControl.getState().getState() == EStates.Game) {
 					draw();
-				}				
+				}
 			}
 			FpsControl.loopEnd();
-
 		}
 
 		end();
@@ -106,7 +109,7 @@ public class Game implements Runnable{
 	private void update() {
 		keyboard.update();
 
-		if(StateControl.getState() != null){
+		if (StateControl.getState() != null) {
 			StateControl.getState().update();
 		}
 
@@ -114,28 +117,28 @@ public class Game implements Runnable{
 
 	private void draw() {
 		bs = mainFrame.getCanvas().getBufferStrategy();
-		if(bs == null){
+		if (bs == null) {
 			mainFrame.getCanvas().createBufferStrategy(3);
 			return;
 		}
 		g = bs.getDrawGraphics();
 
-		//clear
+		// clear
 		g.clearRect(0, 0, MainFrame.MAIN_FRAME_DIMENSION.width, MainFrame.MAIN_FRAME_DIMENSION.height);
 
-		//draw
-		if(StateControl.getState() != null){
+		// draw
+		if (StateControl.getState() != null) {
 			StateControl.getState().Draw(g);
 		}
 
-		//end drawing
+		// end drawing
 		bs.show();
 		g.dispose();
 
 	}
 
-	public void end(){
-		//if(gameLoop) return ;
+	public void end() {
+		// if(gameLoop) return ;
 
 		gameLoop = false;
 
@@ -146,50 +149,55 @@ public class Game implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	public IStateListener getStateListener(){
-		if (stateListener != null){
+
+	public IStateListener getStateListener() {
+		if (stateListener != null) {
 			return stateListener;
 		}
 		stateListener = new IStateListener() {
-			
+
 			@Override
-			public void StateChanged(EStates newState) {				
+			public void StateChanged(EStates newState) {
 				State lastState = StateControl.getState();
-				
-				switch(newState){
-					case Menu:
-						StateControl.setState(menuState);
-						break;
-					case NovoJogo:
-						StateControl.setState(new GameState(gameStateNeeds));
-						break;
-					case Login:
-						StateControl.setState(loginState);
-						break;
-					case Continue:
-						StateControl.setState(gameState);
-						break;
-					case Ranking:
-						StateControl.setState(rankingState);
-						break;
-					default:
-						System.out.println(newState);
+
+				switch (newState) {
+				case FimJogo:
+					gameState = null;
+				case Menu:
+					StateControl.setState(menuState);
+					break;
+				case NovoJogo:
+					StateControl.setState(new GameState(gameStateNeeds));
+					break;
+				case Login:
+					StateControl.setState(loginState);
+					break;
+				case Continue:
+					StateControl.setState(gameState);
+					break;
+				case Ranking:
+					StateControl.setState(rankingState);
+					break;
+				case CriacaoMapa:
+					StateControl.setState(criarMapaState);
+					break;
+				default:
+					System.out.println(newState);
 				}
-				if (lastState == null){
-					SetContentPane(StateControl.getState().getPanel(), null);	
-				}else{
-					SetContentPane(StateControl.getState().getPanel(), lastState.getPanel());					
+				if (lastState == null) {
+					SetContentPane(StateControl.getState().getPanel(), null);
+				} else {
+					SetContentPane(StateControl.getState().getPanel(), lastState.getPanel());
 				}
 			}
 
 			@Override
 			public void SetContentPane(Component c, Component b) {
 				mainFrame.setContentPane(c, b);
-				
+
 			}
 		};
 		return stateListener;
 	}
-
 
 }
