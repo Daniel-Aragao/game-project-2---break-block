@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import dev.entitys.Jogador;
 import dev.entitys.Ranking;
 
 public class RankingRepository implements IRepository<Ranking>{
@@ -30,9 +31,9 @@ public class RankingRepository implements IRepository<Ranking>{
 		try {
 			con = Conexao.getConexao();
 			stmt = con.prepareStatement(
-					"INSERT INTO pontuacao (jogadorNome, pontosObtidos) values(?,?)");
+					"INSERT INTO pontuacao (jogadorId, pontosObtidos) values(?,?)");
 
-			stmt.setString(1, e.getNomeJogador());
+			stmt.setInt(1, e.getJogadorId());
 			stmt.setInt(2, e.getPontos());
 
 			stmt.executeUpdate();
@@ -75,12 +76,14 @@ public class RankingRepository implements IRepository<Ranking>{
 		try {
 			
 			con = Conexao.getConexao();
-			stmt = con.prepareStatement("SELECT * FROM pontuacao ORDER BY pontosObtidos DESC");
+			stmt = con.prepareStatement("SELECT * FROM pontuacao  INNER JOIN jogador ON pontuacao.jogadorId = jogador.id ORDER BY pontosObtidos DESC");
 			
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				Ranking ranking = new Ranking(rs.getString("jogadorNome"), rs.getInt("pontosObtidos"));
+				Jogador jogador = new Jogador(rs.getInt("jogadorId"), rs.getString("nome"), rs.getString("senha"));
+				Ranking ranking = new Ranking(rs.getInt("id"), jogador.getId(), rs.getInt("pontosObtidos"), jogador);
+				
 				rankings.add(ranking);
 			}
 

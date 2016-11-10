@@ -26,7 +26,7 @@ public class UsuarioRepository implements IRepository<Jogador> {
 			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				usuario = new Jogador(rs.getString("nome"), rs.getString("senha"));
+				usuario = new Jogador(rs.getInt("id"), rs.getString("nome"), rs.getString("senha"));
 			}
 
 		} catch (SQLException e) {
@@ -65,6 +65,8 @@ public class UsuarioRepository implements IRepository<Jogador> {
 			stmt.setString(2, e.getSenha());
 
 			stmt.executeUpdate();
+			e = this.buscar(e.getUsuario());
+			
 			return true;
 		} catch (SQLException ee) {
 			ee.printStackTrace();

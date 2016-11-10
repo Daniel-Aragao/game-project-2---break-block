@@ -41,11 +41,11 @@ public class Game implements Runnable {
 	private Graphics g;
 	private BufferStrategy bs;
 	private Keyboard keyboard;
-	public static String nomePlayer;
+	public static int playerId;
 
 	public Game() {
 		gameLoop = false;
-		nomePlayer = "player";
+		playerId = 0;
 	}
 
 	private void init() {
@@ -64,8 +64,8 @@ public class Game implements Runnable {
 		rankingState = new RankingState(getStateListener());
 		criarMapaState = new CriarMapaState(getStateListener());
 
-		 getStateListener().StateChanged(EStates.Menu);
-//		getStateListener().StateChanged(EStates.Login);
+//		 getStateListener().StateChanged(EStates.Menu);
+		getStateListener().StateChanged(EStates.Login);
 //		 getStateListener().StateChanged(EStates.NovoJogo);
 		// getStateListener().StateChanged(EStates.Ranking);
 //		getStateListener().StateChanged(EStates.CriacaoMapa);
@@ -193,6 +193,7 @@ public class Game implements Runnable {
 					}
 					break;
 				case Ranking:
+					rankingState.organizarRankings();
 					StateControl.setState(rankingState);
 					break;
 				case CriacaoMapa:

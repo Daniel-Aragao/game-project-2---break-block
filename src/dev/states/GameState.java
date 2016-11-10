@@ -64,7 +64,7 @@ public class GameState extends State{
 
 	@Override
 	public void changeToState(EStates State) {
-		new RankingRepository().adicionar(new Ranking(Game.nomePlayer, (int) mapa.getScores()));
+		new RankingRepository().adicionar(new Ranking(Game.playerId, (int) mapa.getScores()));
 		this.StateListener.StateChanged(State);
 		
 	}

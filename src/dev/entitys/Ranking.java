@@ -2,20 +2,30 @@ package dev.entitys;
 
 public class Ranking {
 
-	private String nomeJogador;
+	private int id;
+	private int jogadorId;
 	private int pontos;
 	
-	public Ranking(String nomeJogador, int pontos) {
-		this.nomeJogador = nomeJogador;
+	private Jogador jogador;
+	
+	public Ranking(int jogadorId, int pontos) {
+		this.jogadorId = jogadorId;
 		this.pontos = pontos;
 	}
 
-	public String getNomeJogador() {
-		return nomeJogador;
+	public Ranking(int id, int jogadorId, int pontos, Jogador jogador) {
+		this.id = id;
+		this.jogadorId = jogadorId;
+		this.pontos = pontos;
+		this.jogador = jogador;
+	}
+	
+	public int getJogadorId() {
+		return this.jogadorId;
 	}
 
-	public void setNomeJogador(String nomeJogador) {
-		this.nomeJogador = nomeJogador;
+	public void setJogadorId(int jogadorId) {
+		this.jogadorId = jogadorId;
 	}
 
 	public int getPontos() {
@@ -26,4 +36,16 @@ public class Ranking {
 		this.pontos = pontos;
 	}
 
+	public int getId(){
+		return this.id;
+	}
+	
+	public Jogador getJogador(){
+		return this.jogador;
+	}
+	
+	public void setJogador(Jogador jogador){
+		this.jogador = jogador;
+	}
+	
 }

@@ -153,7 +153,7 @@ public class LoginState extends State {
 			JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos");
 			return false;
 		}
-		Game.nomePlayer = jogador.getUsuario();
+		Game.playerId = jogador.getId();
 		return true;
 	}
 
