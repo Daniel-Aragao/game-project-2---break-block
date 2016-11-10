@@ -75,7 +75,7 @@ public class RankingRepository implements IRepository<Ranking>{
 		try {
 			
 			con = Conexao.getConexao();
-			stmt = con.prepareStatement("SELECT * FROM pontuacao ORDER BY pontosObtidos DSC");
+			stmt = con.prepareStatement("SELECT * FROM pontuacao ORDER BY pontosObtidos DESC");
 			
 			ResultSet rs = stmt.executeQuery();
 
