@@ -1,5 +1,6 @@
 package dev.frames.criarMapas;
 
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -41,7 +42,9 @@ public class Celula {
 
 	public JPanel getPanel() {
 		if(isMorta){
-			return new JPanel();
+			JPanel p= new JPanel();
+			p.setBackground(Color.LIGHT_GRAY);
+			return p;
 		}
 		return imagePanel;
 	}

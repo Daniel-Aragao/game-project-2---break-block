@@ -141,5 +141,8 @@ public abstract class Creature extends Entity{
 	public void setyMove(double yMove) {
 		this.yMove = yMove;
 	}
+	public void setElements(ArrayList<Entity> elementos){
+		this.elementos = elementos;
+	}
 
 }

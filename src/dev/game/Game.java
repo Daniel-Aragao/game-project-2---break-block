@@ -58,17 +58,17 @@ public class Game implements Runnable {
 		// mainFrame.getCanvasPanel());
 		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener(), mainFrame.getCanvas());
 
-//		gameState = new GameState(this.gameStateNeeds);
+		// gameState = new GameState(this.gameStateNeeds);
 		menuState = new MenuState(getStateListener());
 		loginState = new LoginState(getStateListener());
 		rankingState = new RankingState(getStateListener());
 		criarMapaState = new CriarMapaState(getStateListener());
 
-//		 getStateListener().StateChanged(EStates.Menu);
+		// getStateListener().StateChanged(EStates.Menu);
 		getStateListener().StateChanged(EStates.Login);
-//		 getStateListener().StateChanged(EStates.NovoJogo);
+		// getStateListener().StateChanged(EStates.NovoJogo);
 		// getStateListener().StateChanged(EStates.Ranking);
-//		getStateListener().StateChanged(EStates.CriacaoMapa);
+		// getStateListener().StateChanged(EStates.CriacaoMapa);
 
 		mainFrame.getFrame().setVisible(true);
 	}
@@ -171,25 +171,38 @@ public class Game implements Runnable {
 					StateControl.setState(menuState);
 					break;
 				case NovoJogo:
-					if(gameState != null){
-						int r = JOptionPane.showConfirmDialog(null, "Há um jogo em andamento, "
-								+ "tem certeza que deseja sobrescreve-lo?");
+					if (gameState != null) {
+						int r = JOptionPane.showConfirmDialog(null,
+								"Há um jogo em andamento, " + "tem certeza que deseja sobrescreve-lo?");
 
-						if (r == 1 || r == 2){
+						if (r == 1 || r == 2) {
 							return;
 						}
 					}
 					gameState = new GameState(gameStateNeeds);
 					StateControl.setState(gameState);
 					break;
+				case SelecaoFase:
+					int faseint = 0;
+					do {
+						String fase = JOptionPane.showInputDialog(StateControl.getState().getPanel(), "Fase 0~9",
+								"Seleção de fase", JOptionPane.OK_CANCEL_OPTION);
+
+						faseint = Integer.parseInt(fase);
+					} while (faseint < 0 || faseint > 9);
+
+					gameState = new GameState(gameStateNeeds);
+					gameState.setFase(faseint);
+					StateControl.setState(gameState);
+					break;
 				case Login:
 					StateControl.setState(loginState);
 					break;
 				case Continue:
-					if (gameState == null){
+					if (gameState == null) {
 						JOptionPane.showMessageDialog(null, "Não há jogo para iniciar");
-					}else{
-						StateControl.setState(gameState);						
+					} else {
+						StateControl.setState(gameState);
 					}
 					break;
 				case Ranking:

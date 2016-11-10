@@ -149,7 +149,7 @@ public class Assets {
 	}
 	
 	public static int getNMapas(){
-		return mapas.size();
+		return 10;
 	}
 	
 	public static void salvarMapa(int[][]mapa, int nivel){

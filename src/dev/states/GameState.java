@@ -12,6 +12,7 @@ import dev.listeners.IKeyPressedListener;
 import dev.needs.GameStateNeeds;
 import dev.needs.MapNeeds;
 import dev.repositories.RankingRepository;
+import dev.util.GameOverTools;
 import dev.util.imports.Assets;
 import dev.util.imports.ImageCatalog;
 import dev.util.imports.MapCatalog;
@@ -36,7 +37,11 @@ public class GameState extends State{
 					mapa.pause();
 				}else if(KeyEvent.VK_B == keyEvent.getKeyCode() || KeyEvent.VK_SPACE == keyEvent.getKeyCode()){
 					mapa.moveBall();
+				}else if(KeyEvent.VK_M == keyEvent.getKeyCode()){
+					mapa.pause();
+					changeToState(EStates.Menu);
 				}
+				
 
 			}
 		});
@@ -44,6 +49,9 @@ public class GameState extends State{
 
 		mapa = new Mapa(mapNeed);
 		this.canvas = gameStateNeeds.getCanvas();
+	}
+	public void setFase(int fase){
+		mapa.selecionarFase(fase);
 	}
 
 
@@ -64,7 +72,9 @@ public class GameState extends State{
 
 	@Override
 	public void changeToState(EStates State) {
-		new RankingRepository().adicionar(new Ranking(Game.playerId, (int) mapa.getScores()));
+		if(State == EStates.FimJogo){
+			new RankingRepository().adicionar(new Ranking(Game.playerId, (int) mapa.getScores()));		
+		}
 		this.StateListener.StateChanged(State);
 		
 	}

@@ -14,6 +14,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import dev.frames.MainFrame;
@@ -22,6 +23,7 @@ import dev.listeners.IStateListener;
 public class MenuState extends State {
 	private JButton continuar;
 	private JButton jogar;
+	private JButton selecionarFase;
 	private JButton ranking;
 	private JButton sair;
 	private JButton criarFases;
@@ -49,11 +51,13 @@ public class MenuState extends State {
 		painelSouth.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		jogar = new JButton("Novo Jogo");
-		continuar = new JButton("Continue");
+		continuar = new JButton("Continuar");
 		ranking = new JButton("Ranking");
 		sair = new JButton("Sair");
 		criarFases = new JButton("Criar fases");
+		selecionarFase = new JButton("Selecionar fase");
 		
+		selecionarFase.setAlignmentX(Component.CENTER_ALIGNMENT);
 		jogar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		continuar.setAlignmentX(Component.CENTER_ALIGNMENT);
 		ranking.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -103,12 +107,22 @@ public class MenuState extends State {
 
 			}
 		});
+		selecionarFase.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				changeToState(EStates.SelecaoFase);				
+				
+			}
+		});
 
 		painelCenter.add(label);
 		painelCenter.add(Box.createRigidArea(new Dimension(10, 10)));
 		painelCenter.add(continuar);
 		painelCenter.add(Box.createRigidArea(new Dimension(10, 10)));
 		painelCenter.add(jogar);
+		painelCenter.add(Box.createRigidArea(new Dimension(10, 10)));
+		painelCenter.add(selecionarFase);
 		painelCenter.add(Box.createRigidArea(new Dimension(10, 10)));
 		painelCenter.add(ranking);
 

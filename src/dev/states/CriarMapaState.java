@@ -69,7 +69,7 @@ public class CriarMapaState extends State {
 		for (int i = 0; i < Mapa.MAPA_HEIGHT; i++) {
 			for (int j = 0; j < Mapa.MAPA_WIDTH; j++) {
 				Celula celula = new Celula(getClickedListener());
-				if ((i == 28 && (j == 4 || j == 5 || j == 6)) || i == 27 && j == 5) {
+				if ((i == 28 && (j == 8 || j == 9 || j == 10)) || i == 27 && j == 9) {
 					celula.isMorta = true;
 				}
 				gridPanel.add(celula.getPanel());
@@ -165,15 +165,8 @@ public class CriarMapaState extends State {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int[][] mapa = getMap();
-				for (int i = 0; i < mapa.length; i++) {
-					for (int j = 0; j < mapa[i].length; j++) {
-						System.out.print(mapa[i][j] + " ");
-					}
-					System.out.println();
-				}
 				
 				Assets.salvarMapa(mapa, faseescolhidaid);
-
 			}
 		});
 		resetar.addActionListener(new ActionListener() {
@@ -221,9 +214,9 @@ public class CriarMapaState extends State {
 		int[][] map = new int[Mapa.MAPA_HEIGHT][Mapa.MAPA_WIDTH];
 		for (int i = 0; i < Mapa.MAPA_HEIGHT; i++) {
 			for (int j = 0; j < Mapa.MAPA_WIDTH; j++) {
-				if ((i == 28 && (j == 4 || j == 5 || j == 6))) {
+				if ((i == 28 && (j == 8 || j == 9 || j == 10))) {
 					map[i][j] = -2;
-				} else if (i == 27 && j == 5) {
+				} else if (i == 27 && j == 9) {
 					map[i][j] = -1;
 				} else {
 					Bloco b = celulas.get(j + i * Mapa.MAPA_WIDTH).getBloco();
