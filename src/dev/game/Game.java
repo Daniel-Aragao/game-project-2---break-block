@@ -66,7 +66,7 @@ public class Game implements Runnable {
 
 //		 getStateListener().StateChanged(EStates.Menu);
 //		getStateListener().StateChanged(EStates.Login);
-		// getStateListener().StateChanged(EStates.NovoJogo);
+//		 getStateListener().StateChanged(EStates.NovoJogo);
 		// getStateListener().StateChanged(EStates.Ranking);
 		getStateListener().StateChanged(EStates.CriacaoMapa);
 

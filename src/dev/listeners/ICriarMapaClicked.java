@@ -1,7 +1,8 @@
 package dev.listeners;
 
 import dev.entitys.blocos.Bloco;
+import dev.frames.criarMapas.Celula;
 
 public interface ICriarMapaClicked {
-	public void click(Bloco bloco);
+	public Bloco click(Celula celula);
 }

@@ -27,8 +27,8 @@ import dev.util.imports.ImageCatalog;
 public class Mapa {
 	public static final int CELULA_WIDTH = 40, CELULA_HEIGHT = 20;
 
-	public static final int MAPA_WIDTH = MainFrame.MAIN_FRAME_DIMENSION.width / CELULA_WIDTH,
-			MAPA_HEIGHT = /*30;*/MainFrame.MAIN_FRAME_DIMENSION.height / CELULA_HEIGHT;
+	public static final int MAPA_WIDTH = 20,//MainFrame.MAIN_FRAME_DIMENSION.width / CELULA_WIDTH,
+			MAPA_HEIGHT = 30;//MainFrame.MAIN_FRAME_DIMENSION.height / CELULA_HEIGHT;
 	public static final int HUD_Y = MainFrame.MAIN_FRAME_DIMENSION.height - Bloco.BLOCO_HEIGHT / 2 + 5;
 	public static final int HUD_INITIAL_X = 40;
 	public static final int SCORE_FOR_LIFE = 500;
@@ -110,7 +110,7 @@ public class Mapa {
 
 					elementos.add(bloco);
 
-				} else if (valor == -2) {
+				} else if ((i == 28 && (j==4 || j==5 || j==6))) {
 					if (player == null) {
 						PlayerNeeds playerNeeds = new PlayerNeeds(needs.getKeyboard(), j * Bloco.BLOCO_WIDTH,
 								i * Bloco.BLOCO_HEIGHT, Player.PLAYER_DEFAULT_WIDTH, Player.PLAYER_DEFAULT_HEIGHT,
@@ -120,7 +120,7 @@ public class Mapa {
 						elementos.add(player);
 					}
 
-				} else if (valor == -1) {
+				} else if (i == 27 && j == 5) {
 					if (bola == null) {
 						bolaNeeds = new CreatureNeeds(j * Bloco.BLOCO_WIDTH, i * Bloco.BLOCO_HEIGHT,
 								Bola.BOLA_DEFAULT_WIDTH, Bola.BOLA_DEFAULT_HEIGHT, elementos);

@@ -35,6 +35,9 @@ public class Assets {
 		paths.add("/imagens/coracao.png");
 		paths.add("/imagens/Game_Over.png");
 		paths.add("/imagens/icon.png");
+		paths.add("/imagens/Save16.gif");
+		paths.add("/imagens/Back24.gif");
+		paths.add("/imagens/middle.gif");
 //		paths.add("/imagens/menubackground.png");
 
 		for(String path : paths){
