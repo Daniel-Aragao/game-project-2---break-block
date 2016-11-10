@@ -1,7 +1,5 @@
 package dev.frames.criarMapas;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -15,11 +13,13 @@ public class Celula {
 	private Bloco bloco;
 	private JImagePanel imagePanel;
 	private ICriarMapaClicked clickEvt;
+	public boolean isMorta;
 
 	public Celula(ICriarMapaClicked clickEvt) {
 		iniciarPanel();
 		this.clickEvt = clickEvt;
 		iniciarclick();
+		isMorta = false;
 	}
 
 	public Celula(ICriarMapaClicked clickEvt, Bloco bloco) {
@@ -27,6 +27,7 @@ public class Celula {
 		this.bloco = bloco;
 		this.clickEvt = clickEvt;
 		iniciarclick();
+		isMorta = false;
 
 		imagePanel.setImage(bloco.getImage());
 	}
@@ -39,6 +40,9 @@ public class Celula {
 	}
 
 	public JPanel getPanel() {
+		if(isMorta){
+			return new JPanel();
+		}
 		return imagePanel;
 	}
 

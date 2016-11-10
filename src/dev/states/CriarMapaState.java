@@ -39,6 +39,7 @@ public class CriarMapaState extends State {
 	private JMenuItem salvar;
 	private JMenuItem desfazer;
 	private JMenuItem limpar;
+	private JMenuItem resetar;
 	private JMenu config;
 	private JMenu fase;
 
@@ -62,11 +63,10 @@ public class CriarMapaState extends State {
 
 		for (int i = 0; i < Mapa.MAPA_HEIGHT; i++) {
 			for (int j = 0; j < Mapa.MAPA_WIDTH; j++) {
-				if ((i == 28 && (j == 4 || j == 5 || j == 6)) || i == 27 && j == 5) {
-					gridPanel.add(new JPanel());
-					continue;
-				}
 				Celula celula = new Celula(getClickedListener());
+				if ((i == 28 && (j == 4 || j == 5 || j == 6)) || i == 27 && j == 5) {
+					celula.isMorta = true;
+				}
 				gridPanel.add(celula.getPanel());
 				celulas.add(celula);
 			}
@@ -125,26 +125,24 @@ public class CriarMapaState extends State {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				throw new RuntimeException("Não implementado");
+				int[][] a = getMap();
+				for (int i = 0; i < a.length; i++) {
+					for (int j = 0; j < a[i].length; j++) {
+						System.out.print(a[i][j] + " ");
+					}
+					System.out.println();
+				}
 
 			}
 		});
-		config.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				throw new RuntimeException("Não implementado");
-
-			}
-		});
-		fase.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				throw new RuntimeException("Não implementado");
-
-			}
-		});
+		// resetar.addActionListener(new ActionListener() {
+		//
+		// @Override
+		// public void actionPerformed(ActionEvent e) {
+		// throw new RuntimeException("Não implementado");
+		//
+		// }
+		// });
 		desfazer.addActionListener(new ActionListener() {
 
 			@Override
@@ -163,6 +161,41 @@ public class CriarMapaState extends State {
 
 			}
 		});
+	}
+
+	public void loadMap(int[][] newmap) {
+		for (int i = 0; i < Mapa.MAPA_HEIGHT; i++) {
+			for (int j = 0; j < Mapa.MAPA_WIDTH; j++) {
+				
+				int valor = newmap[i][j] - 1;
+				if (valor > -1) {
+					celulas.get(j + i * Mapa.MAPA_WIDTH).setBloco(blocos.get(newmap[i][j] - 1));
+				} else {
+					celulas.get(j + i * Mapa.MAPA_WIDTH).setBloco(null);
+				}
+			}
+		}
+	}
+
+	public int[][] getMap() {
+		int[][] map = new int[Mapa.MAPA_HEIGHT][Mapa.MAPA_WIDTH];
+		for (int i = 0; i < Mapa.MAPA_HEIGHT; i++) {
+			for (int j = 0; j < Mapa.MAPA_WIDTH; j++) {
+				if ((i == 28 && (j==4 || j==5 || j==6))) {
+					map[i][j] = -2;
+				}else if (i == 27 && j == 5) {
+					map[i][j] = -1;
+				}else{
+					Bloco b = celulas.get(j + i * Mapa.MAPA_WIDTH).getBloco();
+					if (b != null) {
+						map[i][j] = b.getValor();
+					} else {
+						map[i][j] = 0;
+					}					
+				}
+			}
+		}
+		return map;
 	}
 
 	private void desfazerAcao() {

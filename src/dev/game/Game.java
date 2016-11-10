@@ -64,11 +64,11 @@ public class Game implements Runnable {
 		rankingState = new RankingState(getStateListener());
 		criarMapaState = new CriarMapaState(getStateListener());
 
-//		 getStateListener().StateChanged(EStates.Menu);
+		 getStateListener().StateChanged(EStates.Menu);
 //		getStateListener().StateChanged(EStates.Login);
 //		 getStateListener().StateChanged(EStates.NovoJogo);
 		// getStateListener().StateChanged(EStates.Ranking);
-		getStateListener().StateChanged(EStates.CriacaoMapa);
+//		getStateListener().StateChanged(EStates.CriacaoMapa);
 
 		mainFrame.getFrame().setVisible(true);
 	}

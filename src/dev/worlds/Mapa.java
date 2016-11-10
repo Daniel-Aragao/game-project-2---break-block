@@ -110,7 +110,7 @@ public class Mapa {
 
 					elementos.add(bloco);
 
-				} else if ((i == 28 && (j==4 || j==5 || j==6))) {
+				} else if(valor == -2){//if ((i == 28 && (j==4 || j==5 || j==6))) {
 					if (player == null) {
 						PlayerNeeds playerNeeds = new PlayerNeeds(needs.getKeyboard(), j * Bloco.BLOCO_WIDTH,
 								i * Bloco.BLOCO_HEIGHT, Player.PLAYER_DEFAULT_WIDTH, Player.PLAYER_DEFAULT_HEIGHT,
@@ -120,7 +120,7 @@ public class Mapa {
 						elementos.add(player);
 					}
 
-				} else if (i == 27 && j == 5) {
+				} else if(valor == -1){//if (i == 27 && j == 5) {
 					if (bola == null) {
 						bolaNeeds = new CreatureNeeds(j * Bloco.BLOCO_WIDTH, i * Bloco.BLOCO_HEIGHT,
 								Bola.BOLA_DEFAULT_WIDTH, Bola.BOLA_DEFAULT_HEIGHT, elementos);
