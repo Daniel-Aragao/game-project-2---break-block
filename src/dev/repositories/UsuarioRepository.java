@@ -65,7 +65,7 @@ public class UsuarioRepository implements IRepository<Jogador> {
 			stmt.setString(2, e.getSenha());
 
 			stmt.executeUpdate();
-			e = this.buscar(e.getUsuario());
+			e.setId(this.buscar(e.getUsuario()).getId());
 			
 			return true;
 		} catch (SQLException ee) {

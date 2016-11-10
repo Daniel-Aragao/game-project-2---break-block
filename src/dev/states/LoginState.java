@@ -100,7 +100,8 @@ public class LoginState extends State {
 				if (isUsuarioValido()) {
 					Jogador novoUsuario = new Jogador(usuario.getText(), senha.getText());
 					if(registrarUsuario(novoUsuario)){
-						changeToState(EStates.Menu);
+						if (isUsuarioLogado())
+							changeToState(EStates.Menu);
 					}
 				}
 			}
