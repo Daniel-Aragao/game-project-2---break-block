@@ -78,8 +78,7 @@ public class RankingState extends State {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implement yet");
+		
 	}
 
 }

@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import javax.swing.JOptionPane;
+
 import dev.frames.MainFrame;
 import dev.inputs.Keyboard;
 import dev.listeners.IStateListener;
@@ -54,17 +56,17 @@ public class Game implements Runnable {
 		// mainFrame.getCanvasPanel());
 		gameStateNeeds = new GameStateNeeds(keyboard, getStateListener(), mainFrame.getCanvas());
 
-		gameState = new GameState(this.gameStateNeeds);
+//		gameState = new GameState(this.gameStateNeeds);
 		menuState = new MenuState(getStateListener());
 		loginState = new LoginState(getStateListener());
 		rankingState = new RankingState(getStateListener());
 		criarMapaState = new CriarMapaState(getStateListener());
 
-		// getStateListener().StateChanged(EStates.Menu);
+		 getStateListener().StateChanged(EStates.Menu);
 //		getStateListener().StateChanged(EStates.Login);
 		// getStateListener().StateChanged(EStates.NovoJogo);
 		// getStateListener().StateChanged(EStates.Ranking);
-		getStateListener().StateChanged(EStates.CriacaoMapa);
+//		getStateListener().StateChanged(EStates.CriacaoMapa);
 
 		mainFrame.getFrame().setVisible(true);
 	}
@@ -167,13 +169,26 @@ public class Game implements Runnable {
 					StateControl.setState(menuState);
 					break;
 				case NovoJogo:
-					StateControl.setState(new GameState(gameStateNeeds));
+					if(gameState != null){
+						int r = JOptionPane.showConfirmDialog(null, "Há um jogo em andamento, "
+								+ "tem certeza que deseja sobrescreve-lo?");
+
+						if (r == 1 || r == 2){
+							return;
+						}
+					}
+					gameState = new GameState(gameStateNeeds);
+					StateControl.setState(gameState);
 					break;
 				case Login:
 					StateControl.setState(loginState);
 					break;
 				case Continue:
-					StateControl.setState(gameState);
+					if (gameState == null){
+						JOptionPane.showMessageDialog(null, "Não há jogo para iniciar");
+					}else{
+						StateControl.setState(gameState);						
+					}
 					break;
 				case Ranking:
 					StateControl.setState(rankingState);

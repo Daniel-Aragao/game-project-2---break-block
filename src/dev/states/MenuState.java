@@ -48,7 +48,7 @@ public class MenuState extends State {
 		painelSouth.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		painelSouth.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-		jogar = new JButton("Jogar");
+		jogar = new JButton("Novo Jogo");
 		continuar = new JButton("Continue");
 		ranking = new JButton("Ranking");
 		sair = new JButton("Sair");
@@ -84,7 +84,7 @@ public class MenuState extends State {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				throw new RuntimeException("Não implementado");
+				changeToState(EStates.Ranking);
 
 			}
 		});
