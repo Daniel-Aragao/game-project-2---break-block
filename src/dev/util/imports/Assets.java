@@ -5,7 +5,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import dev.worlds.Mapa;
@@ -13,6 +15,7 @@ import dev.worlds.Mapa;
 public class Assets {
 	private static ArrayList<BufferedImage> imagens;
 	private static ArrayList<int[][]> mapas;
+	private static int alteracoes = 0;
 
 	private static void importImagens(){
 		imagens = new ArrayList<BufferedImage>();
@@ -60,12 +63,23 @@ public class Assets {
 		paths.add("./res/worlds/world_2");
 		paths.add("./res/worlds/world_4");
 		paths.add("./res/worlds/world_3");
-//		paths.add("./res/worlds/world_5");
-//		paths.add("./res/worlds/world_6");
-//		paths.add("./res/worlds/world_7");
-//		paths.add("./res/worlds/world_8");
-//		paths.add("./res/worlds/world_9");
-//		paths.add("./res/worlds/world_10");
+		paths.add("./res/worlds/world_5");
+		paths.add("./res/worlds/world_6");
+		paths.add("./res/worlds/world_7");
+		paths.add("./res/worlds/world_8");
+		paths.add("./res/worlds/world_9");
+		
+		paths.add("./res/worlds/default_world_0");
+		paths.add("./res/worlds/default_world_1");
+		paths.add("./res/worlds/default_world_2");
+		paths.add("./res/worlds/default_world_4");
+		paths.add("./res/worlds/default_world_3");
+		paths.add("./res/worlds/default_world_5");
+		paths.add("./res/worlds/default_world_6");
+		paths.add("./res/worlds/default_world_7");
+		paths.add("./res/worlds/default_world_8");
+		paths.add("./res/worlds/default_world_9");
+		
 
 		FileReader reader = null;
 		BufferedReader buffer = null;
@@ -120,21 +134,45 @@ public class Assets {
 	}
 
 	public static int[][] loadMap(MapCatalog catalog) {
-		if(mapas == null){
+		if(mapas == null || alteracoes > 0){
 			importMapas();
+			alteracoes = 0;
 		}
 		return mapas.get(catalog.getValor());
 	}
 	public static int[][] loadMap(int fase) {
-		if(mapas == null){
+		if(mapas == null || alteracoes > 0){
 			importMapas();
+			alteracoes = 0;
 		}
 		return mapas.get(fase);
 	}
 	
-	
 	public static int getNMapas(){
 		return mapas.size();
+	}
+	
+	public static void salvarMapa(int[][]mapa, int nivel){
+		
+		try {
+			FileWriter arquivo= new FileWriter("./res/worlds/world_"+nivel,false);
+			PrintWriter gravararq= new PrintWriter(arquivo,true);
+			
+			for(int i = 0; i < Mapa.MAPA_HEIGHT; i++){
+				String linha = "";
+				for(int j = 0; j < Mapa.MAPA_WIDTH; j++){
+					linha += mapa[i][j]+" ";
+				}
+				gravararq.printf(linha+"%n");
+			}
+			
+			arquivo.close();
+			alteracoes++;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

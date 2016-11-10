@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -34,6 +35,9 @@ public class CriarMapaState extends State {
 	private JPanel panel;
 	private JPanel gridPanel;
 	private JToolBar toobar;
+	private JButton voltar;
+	private JLabel faseescolhida;
+	private int faseescolhidaid;
 
 	private JMenuBar menu;
 	private JMenuItem salvar;
@@ -53,6 +57,7 @@ public class CriarMapaState extends State {
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		faseescolhida = new JLabel("");
 
 		blocos = getBlocos();
 
@@ -73,6 +78,8 @@ public class CriarMapaState extends State {
 		}
 
 		toobar = new JToolBar("Blocos", JToolBar.VERTICAL);
+
+		voltar = new JButton("Voltar");
 
 		for (Bloco b : blocos) {
 			JButton button = new JButton();
@@ -96,12 +103,12 @@ public class CriarMapaState extends State {
 		// fases
 		fase = new JMenu("Fase");
 		fase.setMnemonic(KeyEvent.VK_F);
-		for(int i = 1; i < 11;i++){
-			JMenuItem menuitem = new JMenuItem(i+"ª fase");
-			menuitem.addActionListener(getfaseActionListener(i-1));
+		for (int i = 1; i < 11; i++) {
+			JMenuItem menuitem = new JMenuItem(i + "ª fase");
+			menuitem.addActionListener(getfaseActionListener(i - 1));
 			fase.add(menuitem);
 		}
-		
+
 		// configurações
 		config = new JMenu("Configurações");
 		config.setMnemonic(KeyEvent.VK_C);
@@ -113,9 +120,9 @@ public class CriarMapaState extends State {
 		desfazer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
 
 		limpar = new JMenuItem("Limpar", new ImageIcon(Assets.getImage(ImageCatalog.limpar)));
-		
+
 		resetar = new JMenuItem("Resetar");
-		
+
 		config.add(resetar);
 		config.add(limpar);
 		config.add(desfazer);
@@ -124,35 +131,48 @@ public class CriarMapaState extends State {
 		configurarMenu();
 		menu.add(fase);
 		menu.add(config);
+		menu.add(voltar);
+		menu.add(faseescolhida);
 
 		panel.add(menu, BorderLayout.NORTH);
 		panel.add(gridPanel, BorderLayout.CENTER);
 		panel.add(toobar, BorderLayout.WEST);
 	}
-	
-	private ActionListener getfaseActionListener(int i){
+
+	private ActionListener getfaseActionListener(int i) {
 		return new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loadMap(Assets.loadMap(i));
-				
+				acoes = new ArrayList<Acao>();
+				faseescolhida.setText(" "+(i+1) + "ª fase");
+				faseescolhidaid = i;
 			}
 		};
 	}
 
 	private void configurarMenu() {
+		voltar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				changeToState(EStates.Menu);
+			}
+		});
 		salvar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int[][] a = getMap();
-				for (int i = 0; i < a.length; i++) {
-					for (int j = 0; j < a[i].length; j++) {
-						System.out.print(a[i][j] + " ");
+				int[][] mapa = getMap();
+				for (int i = 0; i < mapa.length; i++) {
+					for (int j = 0; j < mapa[i].length; j++) {
+						System.out.print(mapa[i][j] + " ");
 					}
 					System.out.println();
 				}
+				
+				Assets.salvarMapa(mapa, faseescolhidaid);
 
 			}
 		});
@@ -160,8 +180,8 @@ public class CriarMapaState extends State {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				throw new RuntimeException("Não implementado");
-
+				loadMap(Assets.loadMap(faseescolhidaid + 10));
+				acoes = new ArrayList<Acao>();
 			}
 		});
 		desfazer.addActionListener(new ActionListener() {
@@ -294,7 +314,7 @@ public class CriarMapaState extends State {
 
 	@Override
 	public void changeToState(EStates State) {
-		throw new RuntimeException("Não implementado");
+		StateListener.StateChanged(State);
 
 	}
 
