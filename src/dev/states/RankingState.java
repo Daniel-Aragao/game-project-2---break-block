@@ -44,17 +44,17 @@ public class RankingState extends State {
 		
 		this.titulo = new JLabel("Ranking");
 		
-		this.panel.add(this.titulo);
-		this.panel.add(this.table);
+		this.panel.add(this.titulo, BorderLayout.NORTH);
+		this.panel.add(this.table, BorderLayout.CENTER);
 		
 	}
 
 	public void organizarRankings(List<Ranking> rankings) {
-		bodyTable = new String[1][this.headerTable.length];
+		bodyTable = new String[rankings.size()][this.headerTable.length];
 
 		for (int i = 0; i < rankings.size(); i++) {
 			Ranking ranking = rankings.get(i);
-			bodyTable[i][0] = i + "";
+			bodyTable[i][0] = (i + 1) + "";
 			bodyTable[i][1] = ranking.getNomeJogador();
 			bodyTable[i][2] = ranking.getPontos() + "";
 		}

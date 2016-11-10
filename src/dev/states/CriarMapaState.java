@@ -93,11 +93,18 @@ public class CriarMapaState extends State {
 		acoes = new ArrayList<Acao>();
 		menu = new JMenuBar();
 
-		config = new JMenu("Configurações");
-		config.setMnemonic(KeyEvent.VK_C);
-
+		// fases
 		fase = new JMenu("Fase");
 		fase.setMnemonic(KeyEvent.VK_F);
+		for(int i = 1; i < 11;i++){
+			JMenuItem menuitem = new JMenuItem(i+"ª fase");
+			menuitem.addActionListener(getfaseActionListener(i-1));
+			fase.add(menuitem);
+		}
+		
+		// configurações
+		config = new JMenu("Configurações");
+		config.setMnemonic(KeyEvent.VK_C);
 
 		salvar = new JMenuItem("Salvar", new ImageIcon(Assets.getImage(ImageCatalog.saveicon)));
 		salvar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
@@ -106,7 +113,10 @@ public class CriarMapaState extends State {
 		desfazer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
 
 		limpar = new JMenuItem("Limpar", new ImageIcon(Assets.getImage(ImageCatalog.limpar)));
-
+		
+		resetar = new JMenuItem("Resetar");
+		
+		config.add(resetar);
 		config.add(limpar);
 		config.add(desfazer);
 		config.add(salvar);
@@ -118,6 +128,17 @@ public class CriarMapaState extends State {
 		panel.add(menu, BorderLayout.NORTH);
 		panel.add(gridPanel, BorderLayout.CENTER);
 		panel.add(toobar, BorderLayout.WEST);
+	}
+	
+	private ActionListener getfaseActionListener(int i){
+		return new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loadMap(Assets.loadMap(i));
+				
+			}
+		};
 	}
 
 	private void configurarMenu() {
@@ -135,14 +156,14 @@ public class CriarMapaState extends State {
 
 			}
 		});
-		// resetar.addActionListener(new ActionListener() {
-		//
-		// @Override
-		// public void actionPerformed(ActionEvent e) {
-		// throw new RuntimeException("Não implementado");
-		//
-		// }
-		// });
+		resetar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				throw new RuntimeException("Não implementado");
+
+			}
+		});
 		desfazer.addActionListener(new ActionListener() {
 
 			@Override
@@ -166,7 +187,6 @@ public class CriarMapaState extends State {
 	public void loadMap(int[][] newmap) {
 		for (int i = 0; i < Mapa.MAPA_HEIGHT; i++) {
 			for (int j = 0; j < Mapa.MAPA_WIDTH; j++) {
-				
 				int valor = newmap[i][j] - 1;
 				if (valor > -1) {
 					celulas.get(j + i * Mapa.MAPA_WIDTH).setBloco(blocos.get(newmap[i][j] - 1));
@@ -181,17 +201,17 @@ public class CriarMapaState extends State {
 		int[][] map = new int[Mapa.MAPA_HEIGHT][Mapa.MAPA_WIDTH];
 		for (int i = 0; i < Mapa.MAPA_HEIGHT; i++) {
 			for (int j = 0; j < Mapa.MAPA_WIDTH; j++) {
-				if ((i == 28 && (j==4 || j==5 || j==6))) {
+				if ((i == 28 && (j == 4 || j == 5 || j == 6))) {
 					map[i][j] = -2;
-				}else if (i == 27 && j == 5) {
+				} else if (i == 27 && j == 5) {
 					map[i][j] = -1;
-				}else{
+				} else {
 					Bloco b = celulas.get(j + i * Mapa.MAPA_WIDTH).getBloco();
 					if (b != null) {
 						map[i][j] = b.getValor();
 					} else {
 						map[i][j] = 0;
-					}					
+					}
 				}
 			}
 		}
