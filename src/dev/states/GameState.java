@@ -5,12 +5,13 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JPanel;
-
+import dev.entitys.Ranking;
+import dev.game.Game;
 import dev.inputs.Keyboard;
 import dev.listeners.IKeyPressedListener;
 import dev.needs.GameStateNeeds;
 import dev.needs.MapNeeds;
+import dev.repositories.RankingRepository;
 import dev.util.imports.Assets;
 import dev.util.imports.ImageCatalog;
 import dev.util.imports.MapCatalog;
@@ -63,7 +64,7 @@ public class GameState extends State{
 
 	@Override
 	public void changeToState(EStates State) {
-		// Salvar dados do usuário nesta etapa, ou na própria troca na controladora mais externa classe "Game"
+		new RankingRepository().adicionar(new Ranking(Game.nomePlayer, (int) mapa.getScores()));
 		this.StateListener.StateChanged(State);
 		
 	}

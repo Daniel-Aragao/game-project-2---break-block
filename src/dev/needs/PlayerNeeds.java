@@ -9,7 +9,8 @@ public class PlayerNeeds extends CreatureNeeds{
 
 	public Keyboard keyboard;
 
-	public PlayerNeeds(Keyboard keyboard, double x, double y, int width, int height, ArrayList<Entity> elementos) {
+	public PlayerNeeds(Keyboard keyboard, double x, double y, int width, 
+			int height, ArrayList<Entity> elementos) {
 		super(x, y, width, height, elementos);
 		this.keyboard = keyboard;
 	}

@@ -29,9 +29,14 @@ public abstract class Bloco extends Entity{
 	public void draw(Graphics g) {
 
 		if(valor > 0)
-		g.drawImage(Assets.getImage(ImageCatalog.getItem(valor-1)), (int)x, (int)y, null);
+		g.drawImage(getImage(), (int)x, (int)y, null);
 
 	}
+	
+	public BufferedImage getImage(){
+		return Assets.getImage(ImageCatalog.getItem(valor-1));
+	}
+	
 	@Override
 	public void update() {
 

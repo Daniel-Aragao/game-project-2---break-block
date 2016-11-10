@@ -31,7 +31,7 @@ public class MainFrame {
 		frame = new JFrame(title);
 		frame.setSize(dimension);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
+//		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setFocusable(true);
 		frame.setIconImage(Assets.getImage(ImageCatalog.icon));

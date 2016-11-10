@@ -124,5 +124,4 @@ public class Player extends Creature{
 	public void setLastScores(long lastScores) {
 		this.lastScores = lastScores;
 	}
-
 }

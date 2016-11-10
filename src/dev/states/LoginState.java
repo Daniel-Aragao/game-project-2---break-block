@@ -17,6 +17,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import dev.entitys.Jogador;
+import dev.game.Game;
 import dev.listeners.IStateListener;
 import dev.repositories.UsuarioRepository;
 
@@ -152,7 +153,7 @@ public class LoginState extends State {
 			JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos");
 			return false;
 		}
-
+		Game.nomePlayer = jogador.getUsuario();
 		return true;
 	}
 

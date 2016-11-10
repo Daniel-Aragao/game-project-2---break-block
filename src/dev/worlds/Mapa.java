@@ -239,6 +239,10 @@ public class Mapa {
 		}
 
 	}
+	
+	public long getScores(){
+		return player.getScores();
+	}
 
 	class BlocoHittedHandler implements IBlocoHittedListener {
 
@@ -286,6 +290,5 @@ public class Mapa {
 			}
 
 		}
-
 	}
 }
