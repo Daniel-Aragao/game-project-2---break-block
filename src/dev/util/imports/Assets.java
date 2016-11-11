@@ -58,27 +58,27 @@ public class Assets {
 
 		ArrayList<String> paths = new ArrayList<String>();
 		
-		paths.add("./res/worlds/world_0");
-		paths.add("./res/worlds/world_1");
-		paths.add("./res/worlds/world_2");
-		paths.add("./res/worlds/world_4");
-		paths.add("./res/worlds/world_3");
-		paths.add("./res/worlds/world_5");
-		paths.add("./res/worlds/world_6");
-		paths.add("./res/worlds/world_7");
-		paths.add("./res/worlds/world_8");
-		paths.add("./res/worlds/world_9");
+		paths.add("./res/worlds/world_0.txt");
+		paths.add("./res/worlds/world_1.txt");
+		paths.add("./res/worlds/world_2.txt");
+		paths.add("./res/worlds/world_3.txt");
+		paths.add("./res/worlds/world_4.txt");
+		paths.add("./res/worlds/world_5.txt");
+		paths.add("./res/worlds/world_6.txt");
+		paths.add("./res/worlds/world_7.txt");
+		paths.add("./res/worlds/world_8.txt");
+		paths.add("./res/worlds/world_9.txt");
 		
-		paths.add("./res/worlds/default_world_0");
-		paths.add("./res/worlds/default_world_1");
-		paths.add("./res/worlds/default_world_2");
-		paths.add("./res/worlds/default_world_4");
-		paths.add("./res/worlds/default_world_3");
-		paths.add("./res/worlds/default_world_5");
-		paths.add("./res/worlds/default_world_6");
-		paths.add("./res/worlds/default_world_7");
-		paths.add("./res/worlds/default_world_8");
-		paths.add("./res/worlds/default_world_9");
+		paths.add("./res/worlds/default_world_0.txt");
+		paths.add("./res/worlds/default_world_1.txt");
+		paths.add("./res/worlds/default_world_2.txt");
+		paths.add("./res/worlds/default_world_3.txt");
+		paths.add("./res/worlds/default_world_4.txt");
+		paths.add("./res/worlds/default_world_5.txt");
+		paths.add("./res/worlds/default_world_6.txt");
+		paths.add("./res/worlds/default_world_7.txt");
+		paths.add("./res/worlds/default_world_8.txt");
+		paths.add("./res/worlds/default_world_9.txt");
 		
 
 		FileReader reader = null;
@@ -155,7 +155,7 @@ public class Assets {
 	public static void salvarMapa(int[][]mapa, int nivel){
 		
 		try {
-			FileWriter arquivo= new FileWriter("./res/worlds/world_"+nivel,false);
+			FileWriter arquivo= new FileWriter("./res/worlds/world_"+nivel+".txt",false);
 			PrintWriter gravararq= new PrintWriter(arquivo,true);
 			
 			for(int i = 0; i < Mapa.MAPA_HEIGHT; i++){

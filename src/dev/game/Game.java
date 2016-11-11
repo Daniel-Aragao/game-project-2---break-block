@@ -64,11 +64,11 @@ public class Game implements Runnable {
 		rankingState = new RankingState(getStateListener());
 		criarMapaState = new CriarMapaState(getStateListener());
 
-		// getStateListener().StateChanged(EStates.Menu);
+//		 getStateListener().StateChanged(EStates.Menu);
 		getStateListener().StateChanged(EStates.Login);
 		// getStateListener().StateChanged(EStates.NovoJogo);
 		// getStateListener().StateChanged(EStates.Ranking);
-		// getStateListener().StateChanged(EStates.CriacaoMapa);
+//		 getStateListener().StateChanged(EStates.CriacaoMapa);
 
 		mainFrame.getFrame().setVisible(true);
 	}
@@ -185,14 +185,14 @@ public class Game implements Runnable {
 				case SelecaoFase:
 					int faseint = 0;
 					do {
-						String fase = JOptionPane.showInputDialog(StateControl.getState().getPanel(), "Fase 0~9",
+						String fase = JOptionPane.showInputDialog(StateControl.getState().getPanel(), "Fase 1~10",
 								"Seleção de fase", JOptionPane.OK_CANCEL_OPTION);
 
 						faseint = Integer.parseInt(fase);
-					} while (faseint < 0 || faseint > 9);
+					} while (faseint < 1 || faseint > 10);
 
 					gameState = new GameState(gameStateNeeds);
-					gameState.setFase(faseint);
+					gameState.setFase(faseint-1);
 					StateControl.setState(gameState);
 					break;
 				case Login:

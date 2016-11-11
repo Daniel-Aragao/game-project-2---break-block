@@ -103,9 +103,10 @@ public class CriarMapaState extends State {
 		// fases
 		fase = new JMenu("Fase");
 		fase.setMnemonic(KeyEvent.VK_F);
-		for (int i = 1; i < 11; i++) {
-			JMenuItem menuitem = new JMenuItem(i + "ª fase");
-			menuitem.addActionListener(getfaseActionListener(i - 1));
+		for (int i = 0; i < 10; i++) {
+//			deve ser aqui
+			JMenuItem menuitem = new JMenuItem(i+1 + "ª fase");
+			menuitem.addActionListener(getfaseActionListener(i));
 			fase.add(menuitem);
 		}
 

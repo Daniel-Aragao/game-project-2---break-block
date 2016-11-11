@@ -207,8 +207,8 @@ public class Mapa {
 		bolaNeeds.elementos = elementos;
 		bola = new Bola(bolaNeeds);
 		addInElementList(bola);
-//		elementos.add(bola);
-//		bola.setElements(elementos);
+		
+		this.blocosCounter = 0;
 
 	}
 
