@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+import dev.util.BackgroundSoundID;
 import dev.worlds.Mapa;
 
 public class Assets {
@@ -173,6 +178,25 @@ public class Assets {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static AudioInputStream getSound(BackgroundSoundID bg) {
+		try {
+			if(bg == BackgroundSoundID.menu){
+				return AudioSystem.getAudioInputStream(new File("./res/Bgm/Give me your happiness.wav"));				
+			}else if(bg == BackgroundSoundID.game){
+				return AudioSystem.getAudioInputStream(new File("./res/Bgm/One Step Closer.wav"));				
+			} 
+			
+			
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

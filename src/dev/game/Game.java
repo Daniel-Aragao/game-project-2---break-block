@@ -18,8 +18,11 @@ import dev.states.MenuState;
 import dev.states.RankingState;
 import dev.states.State;
 import dev.states.StateControl;
+import dev.util.BackgroundSoundID;
+import dev.util.MusicPlayer;
 import dev.util.fpsControl.FpsControl;
 import dev.util.fpsControl.IFpsInformer;
+import dev.util.imports.Assets;
 
 public class Game implements Runnable {
 
@@ -64,11 +67,11 @@ public class Game implements Runnable {
 		rankingState = new RankingState(getStateListener());
 		criarMapaState = new CriarMapaState(getStateListener());
 
-//		 getStateListener().StateChanged(EStates.Menu);
+		// getStateListener().StateChanged(EStates.Menu);
 		getStateListener().StateChanged(EStates.Login);
 		// getStateListener().StateChanged(EStates.NovoJogo);
 		// getStateListener().StateChanged(EStates.Ranking);
-//		 getStateListener().StateChanged(EStates.CriacaoMapa);
+		// getStateListener().StateChanged(EStates.CriacaoMapa);
 
 		mainFrame.getFrame().setVisible(true);
 	}
@@ -122,22 +125,28 @@ public class Game implements Runnable {
 	private void draw() {
 		bs = mainFrame.getCanvas().getBufferStrategy();
 		if (bs == null) {
-			mainFrame.getCanvas().createBufferStrategy(3);
+			try {
+				mainFrame.getCanvas().createBufferStrategy(3);
+			} catch (IllegalStateException e) {
+			}
 			return;
 		}
-		g = bs.getDrawGraphics();
+		try {
+			g = bs.getDrawGraphics();
 
-		// clear
-		g.clearRect(0, 0, MainFrame.MAIN_FRAME_DIMENSION.width, MainFrame.MAIN_FRAME_DIMENSION.height);
+			// clear
+			g.clearRect(0, 0, MainFrame.MAIN_FRAME_DIMENSION.width, MainFrame.MAIN_FRAME_DIMENSION.height);
 
-		// draw
-		if (StateControl.getState() != null) {
-			StateControl.getState().Draw(g);
+			// draw
+			if (StateControl.getState() != null) {
+				StateControl.getState().Draw(g);
+			}
+
+			// end drawing
+			bs.show();
+			g.dispose();
+		} catch (NullPointerException e) {
 		}
-
-		// end drawing
-		bs.show();
-		g.dispose();
 
 	}
 
@@ -169,7 +178,9 @@ public class Game implements Runnable {
 					gameState = null;
 				case Menu:
 					StateControl.setState(menuState);
+					new MusicPlayer().start(Assets.getSound(BackgroundSoundID.menu));
 					break;
+
 				case NovoJogo:
 					if (gameState != null) {
 						int r = JOptionPane.showConfirmDialog(null,
@@ -181,7 +192,9 @@ public class Game implements Runnable {
 					}
 					gameState = new GameState(gameStateNeeds);
 					StateControl.setState(gameState);
+					new MusicPlayer().start(Assets.getSound(BackgroundSoundID.game));
 					break;
+
 				case SelecaoFase:
 					int faseint = 0;
 					do {
@@ -190,11 +203,12 @@ public class Game implements Runnable {
 
 						faseint = Integer.parseInt(fase);
 					} while (faseint < 1 || faseint > 10);
-
 					gameState = new GameState(gameStateNeeds);
-					gameState.setFase(faseint-1);
+					gameState.setFase(faseint - 1);
 					StateControl.setState(gameState);
+					new MusicPlayer().start(Assets.getSound(BackgroundSoundID.game));
 					break;
+
 				case Login:
 					StateControl.setState(loginState);
 					break;
@@ -203,15 +217,20 @@ public class Game implements Runnable {
 						JOptionPane.showMessageDialog(null, "Não há jogo para iniciar");
 					} else {
 						StateControl.setState(gameState);
+						new MusicPlayer().start(Assets.getSound(BackgroundSoundID.game));
 					}
 					break;
+
 				case Ranking:
 					rankingState.organizarRankings();
 					StateControl.setState(rankingState);
 					break;
+
 				case CriacaoMapa:
 					StateControl.setState(criarMapaState);
+					new MusicPlayer().start(Assets.getSound(BackgroundSoundID.game));
 					break;
+
 				default:
 					System.out.println(newState);
 				}
@@ -225,7 +244,6 @@ public class Game implements Runnable {
 			@Override
 			public void SetContentPane(Component c, Component b) {
 				mainFrame.setContentPane(c, b);
-
 			}
 		};
 		return stateListener;
