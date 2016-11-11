@@ -196,6 +196,8 @@ public class Game implements Runnable {
 					break;
 
 				case SelecaoFase:
+					try{
+						
 					int faseint = 0;
 					do {
 						String fase = JOptionPane.showInputDialog(StateControl.getState().getPanel(), "Fase 1~10",
@@ -203,10 +205,15 @@ public class Game implements Runnable {
 
 						faseint = Integer.parseInt(fase);
 					} while (faseint < 1 || faseint > 10);
+					
 					gameState = new GameState(gameStateNeeds);
 					gameState.setFase(faseint - 1);
+					
 					StateControl.setState(gameState);
+					
 					new MusicPlayer().start(Assets.getSound(BackgroundSoundID.game));
+					}catch(java.lang.NumberFormatException e){}
+					
 					break;
 
 				case Login:
