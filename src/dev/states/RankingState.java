@@ -28,7 +28,7 @@ public class RankingState extends State {
 	private JPanel panel;
 	private JTable table;
 	private JLabel titulo;
-	
+
 	private JButton voltar;
 
 	public RankingState(IStateListener StateListener) {
@@ -39,18 +39,18 @@ public class RankingState extends State {
 		this.panel = new JPanel();
 		this.panel.setLayout(new BorderLayout());
 		this.panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		
+
 		this.titulo = new JLabel("Ranking");
-		
+
 		this.voltar = new JButton("Voltar");
 		this.voltar.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				changeToState(EStates.Menu);
 			}
 		});
-		
+
 		this.organizarRankings();
 		this.panel.add(this.titulo, BorderLayout.NORTH);
 		this.panel.add(this.voltar, BorderLayout.SOUTH);
@@ -58,15 +58,19 @@ public class RankingState extends State {
 
 	public void organizarRankings() {
 		List<Ranking> rankings = this.rankingRepository.getAll();
-		bodyTable = new String[rankings.size()][this.headerTable.length];
+
+		bodyTable = new String[10][this.headerTable.length];
 
 		for (int i = 0; i < rankings.size(); i++) {
+			if (i == 10) {
+				break;
+			}
 			Ranking ranking = rankings.get(i);
 			bodyTable[i][0] = (i + 1) + "";
 			bodyTable[i][1] = ranking.getJogador().getUsuario();
 			bodyTable[i][2] = ranking.getPontos() + "";
 		}
-		
+
 		this.table = new JTable(this.bodyTable, this.headerTable);
 		this.panel.add(this.table, BorderLayout.CENTER);
 		this.panel.repaint();
@@ -90,7 +94,7 @@ public class RankingState extends State {
 
 	@Override
 	public void update() {
-		
+
 	}
 
 }
